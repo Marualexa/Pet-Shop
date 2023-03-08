@@ -2,25 +2,38 @@
 <div class='containe-pagin'>
   <nav aria-label="Page navigation example">
     <ul class="pagination">
-      <li class="page-item">
-        <a class="page-link" href="#" aria-label="Previous">
-          <span aria-hidden="true">&laquo;</span>
-          <span class="sr-only">Previous</span>
-        </a>
+
+
+      <li v-for="{ numberPage, id } in itemspage" :key="id" class="page-item">
+        <a @click="pageEvent(numberPage)" class="page-link" href="#">{{ numberPage }}</a>
       </li>
-      <li class="page-item"><a class="page-link" href="#">1</a></li>
-      <li class="page-item"><a class="page-link" href="#">2</a></li>
-      <li class="page-item"><a class="page-link" href="#">3</a></li>
-      <li class="page-item">
-        <a class="page-link" href="#" aria-label="Next">
-        <span aria-hidden="true">&raquo;</span>
-        <span class="sr-only">Next</span>
-        </a>
-      </li>
+
     </ul>
   </nav>
 </div>
 </template>
+
+<script setup>
+import { ref, defineEmits } from 'vue';
+
+const itemspage = ref([
+{
+ numberPage: 1,
+ id: '1'
+},
+{
+  numberPage: 2,
+  id: '2'
+}
+]);
+
+const emit = defineEmits(['pageEvent'])
+  
+function pageEvent(numberPage) {
+  emit('pageEvent', numberPage);
+}
+
+</script>
 
 <style scoped>
 .containe-pagin {

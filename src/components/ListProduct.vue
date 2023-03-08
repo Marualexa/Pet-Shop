@@ -10,14 +10,14 @@
           :title="title"
         />
       </div>
-    <Pagination />
+    <Pagination @page-event="eventButton" />
   </div>
 </template>
 
 <script setup>
 import productCard from "./productCard.vue";
 import Pagination from './PaginationButton.vue';
-import { toRefs, defineProps } from "vue";
+import { toRefs, defineProps, inject } from "vue";
 
 
 const props = defineProps({
@@ -31,8 +31,16 @@ const props = defineProps({
     type: String,
   }
 });
-
 const { arrayItem } = toRefs(props);
+
+const { changePage } = inject('page');
+
+function eventButton(args) {
+  console.log('eventListProducts', args);
+  changePage(args)
+}
+
+
 </script>
 
 <style>

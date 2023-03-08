@@ -12,10 +12,15 @@ export function useAsync() {
     const result = ref(null);
     const errorData = ref(null);
 
-    const makeRequest = async (path) => {
+    const makeRequest = async (path, page) => {
 
         try {
-            const { data, status } = await api(path);
+            const { data, status } = await api(path, {
+                params: {
+                    _page: page,
+                    _limit: 5
+        },
+            });
             console.log("consumo api", data);
             result.value = data;
 
@@ -23,7 +28,7 @@ export function useAsync() {
             console.error(error);
             errorData.value = error;
             throw error;
-        }   
+        }
     }
 
     return {

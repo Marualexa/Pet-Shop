@@ -7,7 +7,7 @@
       </div>
       <img src="https://images.pexels.com/photos/276517/pexels-photo-276517.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" alt="bike">
       <div class="product-info-detall">
-        <p>$35,00</p>
+        <p>$35.00</p>
         <p>Bike</p>
         <p>With its practical position, this bike also fulfills a decorative function, add your hall or workspace.</p>
       </div>
@@ -18,9 +18,9 @@
 
 <script setup>
   import { useRoute } from "vue-router";
-  import { useRouter } from 'vue-router'
+  import { useRouter } from 'vue-router';
   import { useAsync } from "../hooks/useAsync";
-  import { onMounted, watch } from 'vue';
+  import { onMounted } from 'vue';
 
   const route = useRoute();
   console.log('Este es el router', route.params);
@@ -35,20 +35,12 @@
     console.log('resiltado', result.value)
   })
 
-  watch(
-  () => result,
-  (val) => {
-    console.log("cambio", val);
-  },
-    {
-    immediate: true,
-  }
-  );
-
   const router = useRouter();
   function backInict() {
     router.push({ name: 'home' })
   }
+
+console.log('este es el result', result)
 
 </script>
 
