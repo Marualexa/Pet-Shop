@@ -1,22 +1,27 @@
 <template>
-<Suspense>
-  <div class="product-container">
+<div>
+  <LoadModel v-if="!errorData && isLoading" />
+  <ErrorComponent v-if="errorData && !isLoading" />
+  <div class="product-container" v-if="!errorData && !isLoading">
   <aside class="product-detail">
       <div class="product-detail-close">
         <img @click="backInict" src="../assets/atras.png" alt="atras">
       </div>
-      <img src="https://images.pexels.com/photos/276517/pexels-photo-276517.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" alt="bike">
+      <img class="imagen-detail" :src="result ? result.imagen : '-'" alt="bike">
+
       <div class="product-info-detall">
-        <p>$35.00</p>
-        <p>Bike</p>
-        <p>With its practical position, this bike also fulfills a decorative function, add your hall or workspace.</p>
+        <p class="info-price">{{ result ? result.price : '-' }}</p>
+        <p class="info-title">{{ result ? result.title : '-' }}</p>
+        <p class="info-descrition">{{ result ? result.description : '-' }}</p>
       </div>
   </aside>
   </div>
-</Suspense>
+</div>
 </template>
 
 <script setup>
+  import LoadModel from "./LoadModel.vue";
+  import ErrorComponent from "./ErrorComponent.vue";
   import { useRoute } from "vue-router";
   import { useRouter } from 'vue-router';
   import { useAsync } from "../hooks/useAsync";
@@ -25,14 +30,14 @@
   const route = useRoute();
   console.log('Este es el router', route.params);
 
-  const { result, errorData, makeRequest } = useAsync();
+  const { result, errorData, makeRequest, isLoading } = useAsync();
 
   const { id } = route.params;
   console.log('id', id);
 
-  onMounted(() => {
-    makeRequest(`product/${id}`)
-    console.log('resiltado', result.value)
+  onMounted( async () => {
+    await makeRequest(`product/${id}`)
+    //console.log('resiltado', result.value)
   })
 
   const router = useRouter();
@@ -40,17 +45,17 @@
     router.push({ name: 'home' })
   }
 
-console.log('este es el result', result)
+console.log('este es el result', result);
 
 </script>
 
-<style scoped>
+<style>
 :root {
-      --white: #FFFFFF;
+      --white: #C7C7C7;
       --black: #000000;
-      --very-light-pink: #C7C7C7;
-      --text-input-field: #F7F7F7;
-      --hospital-green: #ACD9B2;
+      --very-light-pink: #FFACAC;
+      --text-input-field: #FFBFA9;
+      --hospital-green: #FBFFB1;
       --sm: 14px;
       --md: 16px;
       --lg: 18px;
@@ -65,6 +70,7 @@ console.log('este es el result', result)
       padding-bottom: 24px;
       position: absolute;
       margin-top: 15px;
+      border-radius: 20px;
     }
 
   .product-detail-close {
@@ -77,20 +83,20 @@ console.log('este es el result', result)
       padding: 12px;
       border-radius: 50%;
     }
-.product-detail-close img {
-  width: 25px;
-  height: 20px;
+  .product-detail-close img {
+      width: 25px;
+      height: 20px;
 }
 
     .product-detail-close:hover {
       cursor: pointer;
     }
     
-    .product-detail > img:nth-child(2) {
+    .imagen-detail {
       width: 100%;
       height: 360px;
       object-fit: cover;
-      border-radius: 0 0 20px 20px;
+      border-radius:20px 20px 0 0;
     }
     .product-info-detall {
       display: flex;
@@ -98,20 +104,21 @@ console.log('este es el result', result)
       justify-content: center;
       margin: 24px 24px 0 24px;
     }
-    .product-info p:nth-child(1) {
+    .info-price {
       display: grid;
       justify-content: flex-start;
       font-weight: bold;
       font-size: 20px;
       margin: 0 4px 4px 10px;
+      color: #FFACAC;
     }
-    .product-info p:nth-child(2) {
-      color: var(--very-light-pink);
+    .info-title {
+      color: #C7C7C7;
       font-size: 18px;
       margin: 0 4px 4px 10px;
     }
-    .product-info p:nth-child(3) {
-      color: var(--very-light-pink);
+    .info-descrition {
+      color: #C7C7C7;
       font-size: 15px;
       margin: 0 4px 4px 10px;
     }

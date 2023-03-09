@@ -1,5 +1,5 @@
 <template>
-  <Modal :title='title' :Message='text' />
+  <Modal :title='title' :Message='Message' />
 </template>
 
 <script setup>

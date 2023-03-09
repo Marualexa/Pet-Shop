@@ -8,7 +8,7 @@
         <p>{{ title }}</p>
       </div>
       <figure>
-        <img src="../assets/bt_add_to_cart.svg" alt="" />
+        <img src="../assets/carrito.png" alt="" />
       </figure>
     </div>
     </div>
@@ -37,6 +37,7 @@ const { id, imagen, price, title } = toRefs(props);
 </script>
 
 <style scoped>
+
 body {
   margin: 0;
   font-family: "Quicksand", sans-serif;
@@ -75,11 +76,12 @@ body {
   font-size: var(--md);
   margin-top: 0;
   margin-bottom: 4px;
+  color: #FFACAC;
 }
-.product-info div h3:nth-child(2) {
+.product-info div p:nth-child(2) {
   font-size: var(--sm);
   margin-top: 0;
   margin-bottom: 0;
-  color: var(--very-light-pink);
+  color: #FFACAC;
 }
 </style>

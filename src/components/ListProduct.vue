@@ -44,16 +44,6 @@ function eventButton(args) {
 </script>
 
 <style>
-:root {
-  --white: #ffffff;
-  --black: #000000;
-  --very-light-pink: #c7c7c7;
-  --text-input-field: #f7f7f7;
-  --hospital-green: #acd9b2;
-  --sm: 14px;
-  --md: 16px;
-  --lg: 18px;
-}
 body {
   margin: 0;
   font-family: "Quicksand", sans-serif;
@@ -63,7 +53,7 @@ body {
   grid-template-columns: repeat(auto-fill, 240px);
   gap: 25px;
   place-content: center;
-  margin-top: 15px;
+  margin: 20px 10px 10px 10px;
 }
 .product-card {
   width: 240px;

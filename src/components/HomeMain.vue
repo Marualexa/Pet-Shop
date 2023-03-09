@@ -1,35 +1,37 @@
 <template>
-  <Suspense>
-    <template #default>
-      <asyncComponent :arrayItem="result" :title='title' :Message='Message' />
-    </template>
-    <template #fallback>
-      <LoadModel />
-    </template>
-  </Suspense>
+  <div>
+    <ListProduct v-if="!errorData && !isLoading" :arrayItem="result" />
+    <LoadModel v-if="!errorData && isLoading" />
+    <ErrorComponent 
+      :title='title'
+      :Message='Message'
+      v-if="errorData && !isLoading"
+    />
+  </div>
 </template>
 
 <script setup>
 import LoadModel from "./LoadModel.vue";
-import { defineAsyncComponent, ref, provide, watch } from "vue";
+import { ref, provide, watch, onMounted } from "vue";
 import { useAsync } from "../hooks/useAsync";
+import ListProduct from "./ListProduct.vue";
+import ErrorComponent from "./ErrorComponent.vue";
 
+const { result, errorData, makeRequest, isLoading } = useAsync();
+const page = ref('1');
+const limit = ref('5');
 const title = ref('Ooops!');
 const Message = ref('Something went wrong the site did not charge properly 😣😣');
-const { result, errorData, makeRequest } = useAsync();
-const page = ref('1');
 
-const getRequest = () => {
-  return makeRequest("product", page.value)
-    .then((response) => import("./ListProduct.vue"))
-    .catch((error) => {
-      console.log("entra aqui");
-      return import("./ErrorComponent.vue");
-    })
+const getRequest = async() => {
+await makeRequest("product", {
+  _page: page.value,
+  _limit: limit.value
+  });   
 };
 
-const asyncComponent = defineAsyncComponent(async () => {
-  return getRequest();
+onMounted(() => {
+  getRequest()
 });
 
 function changePage(args) {
@@ -39,16 +41,16 @@ function changePage(args) {
 
 provide('page', {
   page,
-  changePage
-})
-
+  changePage,
+});
 
 watch(
   () => page.value,
   (val) => {
-    console.log('HomeMain', )
-     return getRequest();
+    console.log('HomeMain');
+    isLoading.value = true;
+    errorData.val = null;
+    return getRequest()
   }
-)
-
+);
 </script>

@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-      <img src="../assets/icon_menu.svg" alt="menu" class="menu" />
+      <img @click="menuMovil" src="../assets/icon_menu.svg" alt="menu" class="menu" />
 
       <div class="navbar-left">
         <img src="../assets/logo.png" alt="logo" class="logo" />
@@ -38,13 +38,13 @@
   </div>
 </template>
 
-<style scoped>
+<style>
 :root {
-      --white: #FFFFFF;
+      --white: #C7C7C7;
       --black: #000000;
-      --very-light-pink: #C7C7C7;
-      --text-input-field: #F7F7F7;
-      --hospital-green: #ACD9B2;
+      --very-light-pink: #FFACAC;
+      --text-input-field: #FFBFA9;
+      --hospital-green: #FBFFB1;
       --sm: 14px;
       --md: 16px;
       --lg: 18px;
@@ -57,7 +57,7 @@
       display: flex;
       justify-content: space-between;
       padding: 0 24px;
-      border-bottom: 1px solid var(--very-light-pink);
+      border-bottom: 1px solid #FFACAC;
     }
     .menu {
       display: none;
@@ -95,16 +95,15 @@
     .navbar-left ul li a,
     .navbar-right ul li a {
       text-decoration: none;
-      color: var(--very-light-pink);
-      border: 1px solid var(--white);
+      color: #C7C7C7;
       padding: 8px;
       border-radius: 8px;
     }
 
     .navbar-left ul li a:hover,
     .navbar-right ul li a:hover {
-      border: 1px solid var(--hospital-green);
-      color: var(--hospital-green);
+      border: 1px solid #FFACAC;
+      color: #FFACAC;
     }
 
     .navbar-shopping-cart {
@@ -114,7 +113,7 @@
     .navbar-shopping-cart div {
       width: 16px;
       height: 16px;
-      background-color: var(--hospital-green);
+      background-color: #FFACAC;
       border-radius: 50%;
       font-size: var(--sm);
       font-weight: bold;

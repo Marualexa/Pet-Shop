@@ -3,7 +3,6 @@
   <nav aria-label="Page navigation example">
     <ul class="pagination">
 
-
       <li v-for="{ numberPage, id } in itemspage" :key="id" class="page-item">
         <a @click="pageEvent(numberPage)" class="page-link" href="#">{{ numberPage }}</a>
       </li>
@@ -40,5 +39,14 @@ function pageEvent(numberPage) {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.page-item :hover{
+  border: 1px solid #FFACAC;
+  color: #FFACAC;
+}
+
+.page-link {
+  color: rgb(200, 200, 170);
 }
 </style>
