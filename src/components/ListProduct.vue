@@ -1,4 +1,6 @@
 <template>
+  <div>
+    <MenuMovil v-if="showBurge" />
   <div class="main-container">
       <div class="cards-container">
         <productCard
@@ -12,13 +14,14 @@
       </div>
     <Pagination @page-event="eventButton" />
   </div>
+</div>
 </template>
 
 <script setup>
 import productCard from "./productCard.vue";
 import Pagination from './PaginationButton.vue';
 import { toRefs, defineProps, inject } from "vue";
-
+import MenuMovil from './MenuMovil.vue';
 
 const props = defineProps({
   arrayItem: {
@@ -35,11 +38,12 @@ const { arrayItem } = toRefs(props);
 
 const { changePage } = inject('page');
 
+const { showBurge } = inject('showBurge');
+
 function eventButton(args) {
   console.log('eventListProducts', args);
   changePage(args)
 }
-
 
 </script>
 
@@ -91,7 +95,10 @@ body {
 }
 @media (max-width: 640px) {
   .cards-container {
-    grid-template-columns: repeat(auto-fill, 140px);
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr;
+    place-items: center;  
   }
   .product-card {
     width: 140px;

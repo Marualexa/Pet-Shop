@@ -60,11 +60,7 @@ console.log('este es el result', result);
       --md: 16px;
       --lg: 18px;
     }
-    body {
-      margin: 0;
-      font-family: 'Quicksand', sans-serif;
-    }
-
+  
     .product-detail {
       width: 100vw;
       padding-bottom: 24px;
@@ -122,7 +118,7 @@ console.log('este es el result', result);
       font-size: 15px;
       margin: 0 4px 4px 10px;
     }
-    @media (max-width: 640px) {
+    @media (max-width: 340px) {
       .product-detail {
         width: 100%;
       }

@@ -1,6 +1,7 @@
 <template>
+  <div>
   <div class="container">
-      <img @click="menuMovil" src="../assets/icon_menu.svg" alt="menu" class="menu" />
+      <img @click="resposibleMenu" src="../assets/icon_menu.svg" alt="menu" class="menu" />
 
       <div class="navbar-left">
         <img src="../assets/logo.png" alt="logo" class="logo" />
@@ -35,8 +36,29 @@
           </li>
         </ul>
       </div>
+
   </div>
+  
+</div>
 </template>
+
+<script setup>
+  import { inject } from 'vue';
+
+const { showMenu, showBurge } = inject('showBurge');
+
+function resposibleMenu() {
+  //if(showBurge.value == false) {
+  //if(!showBurge.value) {
+    //showMenu(true);
+  //}
+  //else {
+    //showMenu(false);
+  //}
+  showMenu(!showBurge.value)
+}
+</script>
+
 
 <style>
 :root {

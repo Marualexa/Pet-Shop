@@ -44,6 +44,8 @@
     </div>
 </template>
 
+
+
 <style>
 :root {
       --white: #FFFFFF;
@@ -55,10 +57,7 @@
       --md: 16px;
       --lg: 18px;
     }
-    body {
-      margin: 0;
-      font-family: 'Quicksand', sans-serif;
-    }
+
     .mobile-menu {
       padding: 24px;
     }

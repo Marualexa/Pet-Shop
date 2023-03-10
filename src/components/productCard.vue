@@ -38,10 +38,6 @@ const { id, imagen, price, title } = toRefs(props);
 
 <style scoped>
 
-body {
-  margin: 0;
-  font-family: "Quicksand", sans-serif;
-}
 .cards-container {
   display: grid;
   grid-template-columns: repeat(auto-fill, 240px);

@@ -1,5 +1,18 @@
 <script setup>
 import HeaderMenu from "./components/HeaderMenu.vue";
+import { ref, provide } from "vue";
+
+const showBurge = ref(false);
+
+function showMenu(args) {
+  showBurge.value = args;
+}
+
+provide('showBurge', {
+  showBurge,
+  showMenu
+});
+
 </script>
 
 <template>
