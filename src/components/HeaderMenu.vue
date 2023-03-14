@@ -48,13 +48,6 @@
 const { showMenu, showBurge } = inject('showBurge');
 
 function resposibleMenu() {
-  //if(showBurge.value == false) {
-  //if(!showBurge.value) {
-    //showMenu(true);
-  //}
-  //else {
-    //showMenu(false);
-  //}
   showMenu(!showBurge.value)
 }
 </script>
@@ -120,12 +113,14 @@ function resposibleMenu() {
       color: #C7C7C7;
       padding: 8px;
       border-radius: 8px;
+      font-size: 18px;
+      color: #8D7B68;
     }
 
     .navbar-left ul li a:hover,
     .navbar-right ul li a:hover {
-      border: 1px solid #FFACAC;
-      color: #FFACAC;
+      border: 1px solid #A75D5D;
+      color: #A75D5D;
     }
 
     .navbar-shopping-cart {

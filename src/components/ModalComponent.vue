@@ -1,6 +1,6 @@
 <template>
 <teleport to="#app">
-    <section id="modal" class="modal-style inactive">
+    <section id="modal" class="modal-style">
         <div class="modal__container">
             <h2>{{ title }}</h2>
             <p>{{ Message }}</p>
