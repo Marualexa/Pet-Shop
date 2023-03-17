@@ -2,7 +2,7 @@
   <div>
     <LoadModel v-if="!errorData && isLoading" />
     <ErrorComponent v-if="errorData && !isLoading" />
-    <DelectModal v-if="showDeleteModal" />
+    <DelectModal v-if="showDeleteModal" @closet-modal="ModalEvent" />
     <div class="product-container" v-if="!errorData && !isLoading">
       <aside class="product-detail">
         <div class="product-detail-close">
@@ -16,9 +16,12 @@
               <p class="info-price">{{ result ? result.price : "-" }}</p>
             </div>
             <div class="col-4">
-              <button @click="delectButton" type="button" class="btn btn-danger">Delect</button>
+              <button @click="delectButton" type="button" class="btn btn-danger">
+                Delete
+              </button>
             </div>
           </div>
+
           <p class="info-title">{{ result ? result.title : "-" }}</p>
           <p class="info-descrition">{{ result ? result.description : "-" }}</p>
         </div>
@@ -57,9 +60,14 @@ const showDeleteModal = ref(false);
 
 function delectButton() {
   showDeleteModal.value = true;
-  console.log('click delect', delectButton);
+  console.log("click delect", delectButton);
 }
 console.log("este es el result", result);
+
+function ModalEvent(arg) {
+  console.log("entrar para cerra", arg);
+  showDeleteModal.value = false;
+}
 </script>
 
 <style>
@@ -79,7 +87,7 @@ console.log("este es el result", result);
   height: 14px;
   position: absolute;
   top: 24px;
-  left: 319px;
+  left: 250px;
   z-index: 2;
   padding: 12px;
   border-radius: 50%;
@@ -128,8 +136,12 @@ console.log("este es el result", result);
   align-self: end;
 }
 .row {
-  margin-right: -230px;
+  margin-right: -283px;
   margin-bottom: 15px;
+}
+.col-4 {
+  display: flex;
+  justify-content: end;
 }
 
 @media (max-width: 450px) {
@@ -165,4 +177,18 @@ console.log("este es el result", result);
     border-radius: 50%;
   }
 }
+
+@media (max-width: 900px) {
+  .product-detail-close {
+    width: 20px;
+    height: 14px;
+    position: absolute;
+    top: 24px;
+    left: 12px;
+    z-index: 2;
+    padding: 12px;
+    border-radius: 50%;
+  }
+}
+
 </style>

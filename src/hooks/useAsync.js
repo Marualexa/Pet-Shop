@@ -13,18 +13,21 @@ export function useAsync() {
     const result = ref(null);
     const errorData = ref(null);
     const isLoading = ref(true);
+    const cabecera = ref(null);
 
-    const makeRequest = async (path, params = {}) => {
+    const makeRequest = async (path, params = {}, method = 'get') => {
         result.value = null;
         console.log('este es params', params);
 
         try {
-            const { data } = await api(path, {
+            const { data, headers } = await api(path, {
                 params: params,
+                method: method,
             });
-            console.log("consumo api", data);
+            console.log("consumo api", headers);
             result.value = data;
             isLoading.value = false;
+            cabecera.value = headers;
 
         } catch (error) {
             console.error(error);
@@ -38,6 +41,7 @@ export function useAsync() {
         result,
         errorData,
         makeRequest,
-        isLoading
+        isLoading,
+        cabecera
     };
 }

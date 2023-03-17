@@ -1,16 +1,49 @@
 <template>
   <teleport to="#app">
     <section class="modal-style">
+      <LoadModel v-if="errorData && !isLoading" />
+      <ErrorComponent v-if="errorData && isLoading" />
       <div class="modal__container">
         <h2>You are sure to want to remove product</h2>
         <div class="button-container">
-          <button type="button" class="btn btn-success">Yes</button>
-          <button type="button" class="btn btn-danger">No</button>
+          <button @click="deletePost()" type="button" class="btn btn-success">Yes</button>
+          <button @click="closetModal" type="button" class="btn btn-danger">No</button>
         </div>
       </div>
     </section>
   </teleport>
 </template>
+
+<script setup>
+import LoadModel from "./LoadModel.vue";
+import ErrorComponent from "./ErrorComponent.vue";
+import { defineEmits } from "vue";
+import { useRoute } from "vue-router";
+import { useAsync } from "../hooks/useAsync";
+import { useRouter } from "vue-router";
+
+const { result, errorData, makeRequest, isLoading } = useAsync();
+
+const route = useRoute();
+console.log("router params", route.params);
+const router = useRouter();
+
+const { id } = route.params;
+console.log("id", id);
+
+const emit = defineEmits(["closetModal"]);
+
+function closetModal() {
+  emit("closetModal", closetModal);
+}
+
+async function deletePost() {
+  await makeRequest(`product/${id}`, {}, "delete");
+  router.push({ name: "home" });
+  console.log("button yes", deletePost);
+}
+
+</script>
 
 <style scoped>
 .modal-style {
@@ -26,9 +59,11 @@
   width: 53%;
   height: 45%;
   display: grid;
+  text-align: center;
   place-items: center;
   position: absolute;
   top: 100px;
+  padding: 45px;
   background-color: #c7c7c7;
 }
 

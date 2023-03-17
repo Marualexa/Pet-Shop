@@ -72,12 +72,12 @@ const { id, imagen, price, title } = toRefs(props);
   font-size: var(--md);
   margin-top: 0;
   margin-bottom: 4px;
-  color: #FFACAC;
+  color: #8D7B68;
 }
 .product-info div p:nth-child(2) {
   font-size: var(--sm);
   margin-top: 0;
   margin-bottom: 0;
-  color: #FFACAC;
+  color: #8D7B68;
 }
 </style>
