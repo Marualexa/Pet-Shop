@@ -1,7 +1,8 @@
 <template>
   <div>
     <MenuMovil v-if="showBurge" />
-  <div class="main-container">
+
+    <div class="main-container">
       <div class="cards-container">
         <productCard
           v-for="{ id, imagen, price, title } in arrayItem"
@@ -12,16 +13,16 @@
           :title="title"
         />
       </div>
-    <Pagination @page-event="eventButton" />
+      <Pagination @page-event="eventButton" />
+    </div>
   </div>
-</div>
 </template>
 
 <script setup>
 import productCard from "./productCard.vue";
-import Pagination from './PaginationButton.vue';
+import Pagination from "./PaginationButton.vue";
 import { toRefs, defineProps, inject } from "vue";
-import MenuMovil from './MenuMovil.vue';
+import MenuMovil from "./MenuMovil.vue";
 
 const props = defineProps({
   arrayItem: {
@@ -32,22 +33,21 @@ const props = defineProps({
   },
   Message: {
     type: String,
-  }
+  },
 });
 const { arrayItem } = toRefs(props);
 
-const { changePage } = inject('page');
+const { changePage } = inject("page");
 
-const { showBurge } = inject('showBurge');
+const { showBurge } = inject("showBurge");
 
 function eventButton(args) {
-  console.log('eventListProducts', args);
-  changePage(args)
+  console.log("eventListProducts", args);
+  changePage(args);
 }
-
 </script>
 
-<style>
+<style scoped>
 body {
   margin: 0;
   font-family: "Quicksand", sans-serif;
@@ -93,12 +93,13 @@ body {
   margin-bottom: 0;
   color: var(--very-light-pink);
 }
+
 @media (max-width: 640px) {
   .cards-container {
     width: 100%;
     display: grid;
     grid-template-columns: 1fr;
-    place-items: center;  
+    place-items: center;
   }
   .product-card {
     width: 140px;

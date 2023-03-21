@@ -76,7 +76,6 @@ function ModalEvent(arg) {
   justify-content: center;
   align-items: center;
   width: 100vw;
-  padding-bottom: 24px;
   position: absolute;
   margin-top: 15px;
   border-radius: 20px;

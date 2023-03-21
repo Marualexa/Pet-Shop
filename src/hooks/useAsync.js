@@ -15,7 +15,7 @@ export function useAsync() {
     const isLoading = ref(true);
     const cabecera = ref(null);
 
-    const makeRequest = async (path, params = {}, method = 'get') => {
+    const makeRequest = async (path, params = {}, method = 'get', body) => {
         result.value = null;
         console.log('este es params', params);
 
@@ -23,6 +23,7 @@ export function useAsync() {
             const { data, headers } = await api(path, {
                 params: params,
                 method: method,
+                data: body
             });
             console.log("consumo api", headers);
             result.value = data;
