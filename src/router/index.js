@@ -6,6 +6,7 @@ const router = createRouter({
    { path: '/', name: 'home', component: () => import('../components/HomeMain.vue') },
    { path: '/product/:id', name: 'DetalleProduct', component: () => import('../components/DetalleProduct.vue') },
    { path: '/addItems', name: 'addItem', component: () => import('../components/AddItems.vue') },
+   { path: '/edictProduct/:id', name: 'edictProduct', component: () => import('@/components/EdictProduct.vue') }
    ]
 });
 

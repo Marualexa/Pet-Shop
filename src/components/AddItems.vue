@@ -7,12 +7,14 @@
         <label for="inputEmail4">Name</label>
         <input
           type="text"
-          class="form-control is-invalid"
+          class="form-control"
           v-model="name"
           placeholder="Name"
+          :class="{ 'is-invalid': isNameError }"
         />
-        <div class="invalid-feedback">The product name is required.</div>
+        <div v-if="nameVal" class="invalid-feedback">The product name is required.</div>
       </div>
+
       <div class="form-group col-md-6">
         <label for="inputPassword4">Price</label>
         <input
@@ -27,10 +29,18 @@
         </div>
       </div>
     </div>
+
     <div class="form-group">
       <label for="exampleFormControlTextarea1">Description</label>
-      <textarea class="form-control is-invalid" v-model="description" rows="3"></textarea>
-      <div class="invalid-feedback">The description must be maximum of 100.</div>
+      <textarea
+        class="form-control"
+        v-model="description"
+        :class="{ 'is-invalid': isDescription }"
+        rows="3"
+      ></textarea>
+      <div v-if="descriVal" class="invalid-feedback">
+        The description must be maximum of 100.
+      </div>
     </div>
 
     <div class="form-group">
@@ -55,10 +65,10 @@
 <script setup>
 import { useAsync } from "../hooks/useAsync";
 import { useRouter } from "vue-router";
-import { computed, ref, watch } from "vue";
+import { ref, watch } from "vue";
 import LoadingProduct from "./LoadModel.vue";
 import ErrorComponent from "./ErrorComponent.vue";
-import RefeImag from "@/assets/imagen.svg"
+import RefeImag from "@/assets/imagen.svg";
 
 const { result, makeRequest, errorData } = useAsync();
 const router = useRouter();
@@ -70,48 +80,69 @@ const price = ref(null);
 const name = ref(null);
 const description = ref(null);
 const imageSrc = ref(RefeImag);
-const invalid = ref(false)
+const nameVal = ref(false);
+const isNameError = ref(false);
+const invalid = ref(false);
 const isInvalid = ref(false);
+const isDescription = ref(false);
+const descriVal = ref(false);
 
 const expressions = {
   name: /^[a-zA-ZÀ-ÿ\s]{1,40}$/,
   price: /^[0-9]+([.])?([0-9]+)?$/,
   description: /^[a-zA-ZÀ-ÿ\s]{1,100}$/,
-}
+};
 
 async function createButton() {
-if((expressions.price).test(price.value)) {
-  isInvalid.value = false;
-} else {
-  invalid.value = true;
-  isInvalid.value = true;
-  console.log('expresion invalidad')
-}
- //const isNegative = computed(() => amount.value < 0);
+  if (expressions.name.test(name.value)) {
+    isNameError.value = false;
+  } else {
+    nameVal.value = true;
+    isNameError.value = true;
+  }
 
-  // loadingProduct.value = true;
-  // await makeRequest("product", {}, "POST", {
-  //   imagen: imagen.value,
-  //   price: price.value,
-  //   title: name.value,
-  //   description: description.value,
-  // });
-  // imagen.value = "";
-  // price.value = "";
-  // name.value = "";
-  // description.value = "";
-  // loadingProduct.value = false;
-  // router.push({ name: "DetalleProduct", params: { id: result.value.id } });
+  if (expressions.price.test(price.value)) {
+    isInvalid.value = false;
+  } else {
+    invalid.value = true;
+    isInvalid.value = true;
+  }
+
+  if (expressions.description.test(description.value)) {
+    isDescription.value = false;
+  } else {
+    descriVal.value = true;
+    isDescription.value = true;
+  }
+
+  if (
+    expressions.name.test(name.value) &&
+    expressions.price.test(price.value) &&
+    expressions.description.test(description.value)
+  ) {
+    loadingProduct.value = true;
+    await makeRequest("product", {}, "POST", {
+      imagen: imagen.value,
+      price: price.value,
+      title: name.value,
+      description: description.value,
+    });
+    imagen.value = "";
+    price.value = "";
+    name.value = "";
+    description.value = "";
+    loadingProduct.value = false;
+    router.push({ name: "DetalleProduct", params: { id: result.value.id } });
+  }
 }
 
 watch(
   () => imagen.value,
   (val) => {
-    if(val) {
-      imageSrc.value = val
+    if (val) {
+      imageSrc.value = val;
     }
     console.log("Previsualuzacion imagen", imagen);
-
   }
 );
 </script>
@@ -139,7 +170,7 @@ watch(
   border-color: #a75d5d;
 }
 .btn-outline-success:hover {
-  color: #c7c7c7;
+  color: #fff;
   background-color: #a75d5d;
   border: #a75d5d;
 }
@@ -150,7 +181,6 @@ watch(
   align-items: end;
   width: 50px;
   height: 100%;
-  border: 1px solid #a75d5d;
   padding: 23px;
 }
 
