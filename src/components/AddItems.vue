@@ -1,6 +1,6 @@
 <template>
-  <LoadingProduct v-if="!loadingProduct && errorData" />
-  <ErrorComponent :title="title" :Message="Message" v-if="!errorData && loadingProduct" />
+  <LoadingProduct v-if="loadingProduct && !errorData" />
+  <ErrorComponent :title="title" :Message="Message" v-if="errorData && !loadingProduct" />
   <form @submit.prevent="createButton" class="container-items" novalidate>
     <div class="form-row">
       <div class="form-group col-md-6">
@@ -121,6 +121,7 @@ async function createButton() {
     expressions.description.test(description.value)
   ) {
     loadingProduct.value = true;
+
     await makeRequest("product", {}, "POST", {
       imagen: imagen.value,
       price: price.value,

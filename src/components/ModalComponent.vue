@@ -1,12 +1,12 @@
 <template>
-<teleport to="#app">
+  <teleport to="#app">
     <section id="modal" class="modal-style">
-        <div class="modal__container">
-            <h2>{{ title }}</h2>
-            <p>{{ Message }}</p>
-        </div>
+      <div class="modal__container">
+        <h2>{{ title }}</h2>
+        <p>{{ Message }}</p>
+      </div>
     </section>
-    </teleport>
+  </teleport>
 </template>
 
 <script setup>
@@ -18,7 +18,7 @@ const props = defineProps({
   },
   Message: {
     type: String,
-  }
+  },
 });
 
 const { title, Message } = toRefs(props);
@@ -28,23 +28,21 @@ const { title, Message } = toRefs(props);
 .modal-style {
   width: 100%;
   height: 100%;
-  position: absolute;
-  background-color: rgb(236, 242, 255);
+  position: fixed;
   z-index: 5;
-
   display: grid;
   place-items: center;
-
 }
 
 .modal__container {
-  background-color: #E5D1FA;
+  background-color: #ffffff;
   width: 53%;
   height: 45%;
   display: grid;
   place-items: center;
   position: absolute;
   top: 100px;
+  box-shadow: 10px 10px 71px 1px rgba(0,0,0,0.75);
 }
 
 .modal__container h2 {
@@ -55,7 +53,7 @@ const { title, Message } = toRefs(props);
   display: flex;
   margin: 30px;
   text-align: center;
-  font-family: 'Red Hat Display', sans-serif;
+  font-family: "Red Hat Display", sans-serif;
   font-weight: 800;
 }
 </style>

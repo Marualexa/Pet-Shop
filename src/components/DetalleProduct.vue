@@ -1,13 +1,17 @@
 <template>
   <div>
     <LoadModel v-if="!errorData && isLoading" />
-    <ErrorComponent v-if="errorData && !isLoading" />
+    <ErrorComponent :title="title" :Message="Message" v-if="errorData && !isLoading" />
     <DelectModal v-if="showDeleteModal" @closet-modal="ModalEvent" />
     <div class="product-container" v-if="!errorData && !isLoading">
       <aside class="product-detail">
-        <div class="product-detail-close">
-          <img @click="backInict" src="../assets/atras.png" alt="atras" />
-        </div>
+        <img
+          @click="backInict"
+          class="arrow-leth"
+          src="../assets/atras.png"
+          alt="atras"
+        />
+
         <img class="imagen-detail" :src="result ? result.imagen : '-'" alt="bike" />
 
         <div class="product-info-detall">
@@ -39,6 +43,8 @@ import { useRouter } from "vue-router";
 import { useAsync } from "../hooks/useAsync";
 import { onMounted, ref } from "vue";
 
+const title = ref("Ooops!");
+const Message = ref("Something went wrong the site did not charge properly 😣😣");
 const route = useRoute();
 console.log("Este es el router", route.params);
 
@@ -48,7 +54,7 @@ const { id } = route.params;
 console.log("id", id);
 
 onMounted(async () => {
-  await makeRequest(`product/${id}`);
+  await makeRequest(`productss/${id}`);
 });
 
 const router = useRouter();
@@ -81,22 +87,18 @@ function ModalEvent(arg) {
   border-radius: 20px;
 }
 
-.product-detail-close {
-  width: 20px;
-  height: 14px;
+.arrow-leth {
+  width: 50px;
+  height: 50px;
   position: absolute;
-  top: 24px;
-  left: 250px;
+  top: calc(25% - 100px);
+  left: calc(87% - 68%);
   z-index: 2;
   padding: 12px;
   border-radius: 50%;
 }
-.product-detail-close img {
-  width: 30px;
-  height: 22px;
-}
 
-.product-detail-close:hover {
+.arrow-leth:hover {
   cursor: pointer;
 }
 
@@ -189,5 +191,4 @@ function ModalEvent(arg) {
     border-radius: 50%;
   }
 }
-
 </style>

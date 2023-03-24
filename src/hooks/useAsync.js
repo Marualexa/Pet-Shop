@@ -23,7 +23,7 @@ export function useAsync() {
             const { data, headers } = await api(path, {
                 params: params,
                 method: method,
-                data: body
+                data: body,
             });
             console.log("consumo api", headers);
             result.value = data;
