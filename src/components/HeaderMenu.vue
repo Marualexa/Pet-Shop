@@ -10,29 +10,10 @@
 
       <div class="navbar-left">
         <img src="../assets/logo.png" alt="logo" class="logo" />
-
-        <ul>
-          <li>
-            <a href="/">All</a>
-          </li>
-          <li>
-            <a href="/">Clothes</a>
-          </li>
-          <li>
-            <a href="/">Electronics</a>
-          </li>
-          <li>
-            <a href="/">Furnitures</a>
-          </li>
-          <li>
-            <a href="/">Toys</a>
-          </li>
-          <li>
-            <a href="/">Others</a>
-          </li>
-        </ul>
       </div>
 
+      <Search />
+  
       <div class="items-product inactive">
         <div class="button-item">
           <button @click="itemsButton" type="button" class="btn btn-outline-success">
@@ -43,7 +24,11 @@
         <div class="navbar-right">
           <ul>
             <li class="navbar-shopping-cart">
-              <img src="../assets/icon_shopping_cart.svg" alt="shopping cart" />
+              <img
+                @click="showPiCar"
+                src="../assets/icon_shopping_cart.svg"
+                alt="shopping cart"
+              />
               <div>0</div>
             </li>
           </ul>
@@ -56,6 +41,8 @@
 <script setup>
 import { inject } from "vue";
 import { useRouter } from "vue-router";
+import MyOrder from "./MyOrder.vue";
+import Search from "./searchProduct.vue"
 
 const { showMenu, showBurge } = inject("showBurge");
 const router = useRouter();
@@ -66,6 +53,11 @@ function resposibleMenu() {
 
 function itemsButton() {
   router.push({ name: "addItem" });
+}
+
+function showPiCar() {
+  router.push({ name: "cartShopping"})
+  console.log("click", showPiCar);
 }
 </script>
 
@@ -87,6 +79,7 @@ body {
 .container {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   border-bottom: 1px solid #ffacac;
 }
 .menu {
