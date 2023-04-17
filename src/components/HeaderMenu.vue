@@ -25,11 +25,12 @@
           <ul>
             <li class="navbar-shopping-cart">
               <img
-                @click="showPiCar"
+                @click="showPiCar()"
                 src="../assets/icon_shopping_cart.svg"
                 alt="shopping cart"
               />
               <div>0</div>
+              <MyOrder v-if="openCart" />
             </li>
           </ul>
         </div>
@@ -39,13 +40,13 @@
 </template>
 
 <script setup>
-import { inject } from "vue";
 import { useRouter } from "vue-router";
+import Search from "./searchProduct.vue";
 import MyOrder from "./MyOrder.vue";
-import Search from "./searchProduct.vue"
+import { ref } from "vue";
 
-const { showMenu, showBurge } = inject("showBurge");
 const router = useRouter();
+const openCart = ref(false)
 
 function resposibleMenu() {
   showMenu(!showBurge.value);
@@ -56,9 +57,9 @@ function itemsButton() {
 }
 
 function showPiCar() {
-  router.push({ name: "cartShopping"})
-  console.log("click", showPiCar);
+  openCart.value = !openCart.value;
 }
+
 </script>
 
 <style scoped>

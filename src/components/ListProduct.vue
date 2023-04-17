@@ -1,7 +1,6 @@
 <template>
   <div>
     <MenuMovil v-if="showBurge" />
-
     <div class="main-container">
       <div class="cards-container">
         <productCard

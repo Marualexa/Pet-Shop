@@ -9,7 +9,12 @@
         </div>
         <figure>
           <img class="imagen-carrito" src="../assets/carrito.png" alt="" />
-          <img @click.stop.prevent="edictProduct($event)" class="imagen-edict" src="@/assets/lapiz-de-atribucion.svg" alt="" />
+          <img
+            @click.stop.prevent="edictProduct($event)"
+            class="imagen-edict"
+            src="@/assets/editar.svg"
+            alt=""
+          />
         </figure>
       </div>
     </div>
@@ -39,9 +44,8 @@ const { id, imagen, price, title } = toRefs(props);
 const router = useRouter();
 
 function edictProduct(ev) {
-  console.log('entrar', ev)
-  router.push({ name: "edictProduct", params: { id: id.value } });;
-  
+  console.log("entrar", ev);
+  router.push({ name: "edictProduct", params: { id: id.value } });
 }
 </script>
 
@@ -76,8 +80,11 @@ function edictProduct(ev) {
   height: 35px;
 }
 .product-info .imagen-edict {
-  width: 30px;
-  height: 30px;
+  width: 25px;
+  height: 25px;
+  border-radius: 0;
+  margin-left: 10px;
+  background-color: #ffacac;
 }
 .product-info div h3:nth-child(1) {
   font-weight: bold;

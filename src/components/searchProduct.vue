@@ -1,11 +1,20 @@
 <template>
   <div id="search-box">
     <form action="/search" id="search-form" method="get" target="_top">
-      <input id="search-text" name="q" placeholder="Search" type="text" />
+      <input v-model="search" id="search-text" name="q" placeholder="Search" type="text" />
       <button id="search-button" type="submit"><span>Busca!</span></button>
     </form>
   </div>
 </template>
+
+<script setup>
+import { ref } from 'vue';
+import { useAsync } from "../hooks/useAsync";
+
+const { result, errorData, makeRequest, isLoading } = useAsync();
+const search = ref("");
+
+</script>
 
 <style>
 #search-box {

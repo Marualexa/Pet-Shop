@@ -6,16 +6,17 @@
     </div>
 
     <div class="my-order-content">
-      <div class="shopping-cart">
+      <div 
+        class="shopping-cart"
+        v-for="item in store.getCartPets"
+        :key="item.id"
+        :id="item.id">
         <figure>
-          <img
-            src="https://images.pexels.com/photos/276517/pexels-photo-276517.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
-            alt="bike"
-          />
+          <img :src="item.imagen" alt="bike">
         </figure>
-        <p>Bike</p>
-        <p>$30,00</p>
-        <img src="@/assets/icon_close.png" alt="close" />
+        <p>{{ item.title }}</p>
+        <p>${{ new Intl.NumberFormat("es-ES").format(item.price) }}</p>
+        <img src="@/assets/icon_close.png" alt="close">
       </div>
 
       <div class="order">
@@ -30,6 +31,13 @@
   </aside>
 </template>
 
+<script setup>
+import { useCartStore} from "@/store/cartContainer";
+
+const store = useCartStore();
+console.log('store', store.getTotalPrice)
+</script>
+
 <style>
 .product-detail {
   width: 360px;
@@ -37,6 +45,7 @@
   box-sizing: border-box;
   position: absolute;
   right: 0;
+  background-color: #f7f7f7;
 }
 .title-container {
   display: flex;
