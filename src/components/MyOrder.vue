@@ -1,44 +1,54 @@
 <template>
   <aside class="product-detail">
     <div class="title-container">
-      <img src="@/assets/flechita.svg" alt="arrow" />
+      <!-- <img src="@/assets/flechita.svg" alt="arrow" /> -->
       <p class="title">My order</p>
     </div>
-
     <div class="my-order-content">
-      <div 
+      <div
         class="shopping-cart"
         v-for="item in store.getCartPets"
         :key="item.id"
-        :id="item.id">
+        :id="item.id"
+      >
         <figure>
-          <img :src="item.imagen" alt="bike">
+          <img :src="item.imagen" alt="bike" />
         </figure>
-        <p>{{ item.title }}</p>
-        <p>${{ new Intl.NumberFormat("es-ES").format(item.price) }}</p>
-        <img src="@/assets/icon_close.png" alt="close">
+        <p>{{ item.title }} <span>X{{ store.getItemQuantity(item.id) }}</span> </p>
+        <p>${{ new Intl.NumberFormat("es-US").format(item.price) }}</p>
+        <img
+          @click="store.removeItemCart(item)"
+          class="closet"
+          src="@/assets/cruz.svg"
+          alt="close"
+        />
       </div>
 
       <div class="order">
         <p>
           <span>Total</span>
         </p>
-        <p>$560.00</p>
+        <p>${{ new Intl.NumberFormat("es-US").format(store.getTotalPrice) }}</p>
       </div>
 
-      <button class="primary-button">Checkout</button>
+      <button @click="shopping" class="primary-button">Continue shopping</button>
     </div>
   </aside>
 </template>
 
 <script setup>
-import { useCartStore} from "@/store/cartContainer";
+import { useRouter } from "vue-router";
+import { useCartStore } from "@/store/cartContainer";
 
-const store = useCartStore();
-console.log('store', store.getTotalPrice)
+const router = useRouter();
+const store = useCartStore("");
+
+function shopping() {
+  router.push({ name: "cartDetail" });
+}
 </script>
 
-<style>
+<style scoped>
 .product-detail {
   width: 360px;
   padding: 24px;
@@ -46,6 +56,8 @@ console.log('store', store.getTotalPrice)
   position: absolute;
   right: 0;
   background-color: #f7f7f7;
+  border-radius: 50px;
+  z-index: 10;
 }
 .title-container {
   display: flex;
@@ -114,9 +126,17 @@ console.log('store', store.getTotalPrice)
   font-weight: bold;
   height: 50px;
 }
-@media (max-width: 640px) {
+.closet {
+  width: 10px;
+  height: 10px;
+  object-fit: contain;
+}
+.closet :hover {
+  color: brown;
+}
+/* @media (max-width: 640px) {
   .product-detail {
     width: 100%;
   }
-}
+} */
 </style>

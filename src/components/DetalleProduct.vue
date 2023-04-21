@@ -38,8 +38,7 @@
 import LoadModel from "./LoadModel.vue";
 import ErrorComponent from "./ErrorComponent.vue";
 import DelectModal from "./DelectModal.vue";
-import { useRoute } from "vue-router";
-import { useRouter } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import { useAsync } from "../hooks/useAsync";
 import { onMounted, ref } from "vue";
 
@@ -54,7 +53,7 @@ const { id } = route.params;
 console.log("id", id);
 
 onMounted(async () => {
-  await makeRequest(`productss/${id}`);
+  await makeRequest(`product/${id}`);
 });
 
 const router = useRouter();

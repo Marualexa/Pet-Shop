@@ -13,9 +13,12 @@ import { useAsync } from "../hooks/useAsync";
 import { useRoute } from "vue-router";
 import ListProduct from "./ListProduct.vue";
 import ErrorComponent from "./ErrorComponent.vue";
+import { useCartStore} from "@/store/cartContainer";
 
 const route = useRoute();
 console.log("Este es el router", route.params);
+const store = useCartStore();
+
 
 const { result, errorData, makeRequest, isLoading, cabecera } = useAsync();
 const page = ref("1");
@@ -42,6 +45,7 @@ const getRequest = async () => {
 
 onMounted(() => {
   getRequest();
+  store.getAddStore();
 });
 
 function changePage(args) {

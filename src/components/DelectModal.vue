@@ -22,7 +22,7 @@ import { useRoute } from "vue-router";
 import { useAsync } from "../hooks/useAsync";
 import { useRouter } from "vue-router";
 
-const { result, errorData, makeRequest, isLoading } = useAsync();
+const { errorData, makeRequest, isLoading } = useAsync();
 
 const route = useRoute();
 console.log("router params", route.params);
@@ -38,6 +38,7 @@ function closetModal() {
 }
 
 async function deletePost() {
+  console.log('idDelete', id)
   await makeRequest(`product/${id}`, {}, "delete");
   router.push({ name: "home" });
   console.log("button yes", deletePost);

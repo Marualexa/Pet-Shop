@@ -29,7 +29,7 @@
                 src="../assets/icon_shopping_cart.svg"
                 alt="shopping cart"
               />
-              <div>0</div>
+              <div>{{ store.getCartLength }}</div>
               <MyOrder v-if="openCart" />
             </li>
           </ul>
@@ -44,6 +44,9 @@ import { useRouter } from "vue-router";
 import Search from "./searchProduct.vue";
 import MyOrder from "./MyOrder.vue";
 import { ref } from "vue";
+import { useCartStore} from "@/store/cartContainer";
+
+const store = useCartStore();
 
 const router = useRouter();
 const openCart = ref(false)
@@ -59,7 +62,6 @@ function itemsButton() {
 function showPiCar() {
   openCart.value = !openCart.value;
 }
-
 </script>
 
 <style scoped>

@@ -8,7 +8,7 @@
           <p>{{ title }}</p>
         </div>
         <figure>
-          <img class="imagen-carrito" src="../assets/carrito.png" alt="" />
+          <img @click.stop.prevent="store.addItemCart(props)" class="imagen-carrito" src="@/assets/carrito.png" alt="" />
           <img
             @click.stop.prevent="edictProduct($event)"
             class="imagen-edict"
@@ -24,6 +24,10 @@
 <script setup>
 import { toRefs, defineProps } from "vue";
 import { useRouter } from "vue-router";
+import { useCartStore} from "@/store/cartContainer";
+
+const store = useCartStore();
+console.log('store', store.addItemCart)
 
 const props = defineProps({
   id: {
@@ -33,7 +37,7 @@ const props = defineProps({
     type: String,
   },
   price: {
-    type: String,
+    type: Number,
   },
   title: {
     type: String,
