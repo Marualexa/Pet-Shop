@@ -1,7 +1,6 @@
 <template>
   <aside class="product-detail">
     <div class="title-container">
-      <!-- <img src="@/assets/flechita.svg" alt="arrow" /> -->
       <p class="title">My order</p>
     </div>
     <div class="my-order-content">
@@ -19,7 +18,7 @@
         <img
           @click="store.removeItemCart(item)"
           class="closet"
-          src="@/assets/cruz.svg"
+          src="@/assets/cerrar.png"
           alt="close"
         />
       </div>
@@ -41,11 +40,12 @@ import { useRouter } from "vue-router";
 import { useCartStore } from "@/store/cartContainer";
 
 const router = useRouter();
-const store = useCartStore("");
+const store = useCartStore();
 
 function shopping() {
   router.push({ name: "cartDetail" });
 }
+
 </script>
 
 <style scoped>

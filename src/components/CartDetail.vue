@@ -16,96 +16,34 @@
               </tr>
             </thead>
             <tbody>
-              <tr>
+              <tr v-for="product in store.getCartPets" :key="product.id">
                 <th scope="row">
                   <img
                     class="img-figure"
-                    src="https://images.pexels.com/photos/276517/pexels-photo-276517.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
-                    alt=""
+                    :src="product.imagen" alt="bike"
                   />
-                  <p>Bike</p>
+                  <p>{{ product.title }}</p>
                 </th>
                 <td>
-                  <button class="quantity-button">
+                  <button class="quantity-button" @click="store.decreaseAmount(product)">
                     <img class="menos-item" src="@/assets/menos.svg" alt="" />
                   </button>
-                  <input class="input-number" type="number" placeholder="0" />
-                  <button class="quantity-button">
+                  <span>{{ product.quantity }}</span>
+                  <button class="quantity-button" @click="store.increaseQuantity(product)">
                     <img class="mas-item" src="@/assets/mas.svg" alt="" />
                   </button>
                 </td>
-                <td>${{ new Intl.NumberFormat("es-US").format(320.0) }}</td>
-                <td>${{ new Intl.NumberFormat("es-US").format(400.99) }}</td>
+                <td>${{ new Intl.NumberFormat("es-US").format(product.price) }}</td>
+                <td>${{ new Intl.NumberFormat("es-US").format(store.getPriceBasket(product.id)) }}</td>
                 <td>
-                  <img class="closet" src="../assets/cerrar.png" alt="" />
-                </td>
-              </tr>
-              <tr>
-                <th scope="row">
-                  <img
-                    class="img-figure"
-                    src="https://images.pexels.com/photos/276517/pexels-photo-276517.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
-                    alt=""
-                  />
-                  <p>Bike</p>
-                </th>
-                <td>
-                  <button class="quantity-button">
-                    <img class="menos-item" src="@/assets/menos.svg" alt="" />
-                  </button>
-                  <input class="input-number" type="number" placeholder="0" />
-                  <button class="quantity-button">
-                    <img class="mas-item" src="@/assets/mas.svg" alt="" />
-                  </button>
-                </td>
-                <td>${{ new Intl.NumberFormat("es-US").format(320.0) }}</td>
-                <td>${{ new Intl.NumberFormat("es-US").format(320.0) }}</td>
-                <td>
-                  <img class="closet" src="../assets/cerrar.png" alt="" />
+                  <img @click="store.removeItemCart(product)" class="closet" src="../assets/cerrar.png" alt="" />
                 </td>
               </tr>
             </tbody>
           </table>
         </div>
         <div class="col-lg-3 col-md-6">
-          <div class="tabla-2">
-            <table class="table">
-              <thead>
-                <tr>
-                  <th scope="col" class="segung-title">Resumen</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <th scope="row">SubTotal:</th>
-                  <td>${{ new Intl.NumberFormat("es-US").format(56.387) }}</td>
-                </tr>
-                <tr>
-                  <th scope="row">Descuento:</th>
-                  <td>${{ new Intl.NumberFormat("es-US").format(0) }}</td>
-                </tr>
-                <tr>
-                  <th scope="row">Transporte:</th>
-                  <td>${{ new Intl.NumberFormat("es-US").format(4.0) }}</td>
-                </tr>
-                <tr>
-                  <th scope="row">TOTAL A PAGAR:</th>
-                  <td>${{ new Intl.NumberFormat("es-US").format(77.222) }}</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="container text-center">
-      <div class="row">
-        <div class="col">
-          <button type="button" class="btn btn-success">CONFIRM ORDER</button>
-        </div>
-        <div class="col"></div>
-        <div class="col">
-          <button type="button" class="btn btn-danger">DISCARD ORDER</button>
+          <ResumCar />
         </div>
       </div>
     </div>
@@ -114,15 +52,15 @@
 
 <script setup>
 import { useRouter } from "vue-router";
-import { useCartStore} from "@/store/cartContainer";
+import { useCartStore } from "@/store/cartContainer";
 import { onMounted } from "vue";
+import ResumCar from "./ResumCar.vue";
 
 const store = useCartStore();
-
 const router = useRouter();
-
 onMounted(() => {
   store.getAddStore();
+  console.log('onMounted entra', onMounted)
 });
 
 function backInict() {

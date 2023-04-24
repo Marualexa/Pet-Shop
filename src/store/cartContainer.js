@@ -25,11 +25,17 @@ export const useCartStore = defineStore('cart', {
         },
         getItemQuantity: (state) => {
             return (itemid) => state.cart.find((item) => item.id === itemid).quantity;
-        }
+        },
+        getPriceBasket: (state) => {
+            return (itemGo) => {
+               const constPrice = state.cart.find((item) => item.id === itemGo)
+               return constPrice.quantity * constPrice.price
+            }
+        },
     },
     actions: {
         async removeItemCart(item) {
-            const { makeRequest, result } = useAsync();
+            const { makeRequest } = useAsync();
             await makeRequest(`cart/${item.id}`, {}, "delete")
             const copiCart = this.cart.map(item => item.id);
             const position = copiCart.indexOf(item.id);
@@ -52,10 +58,10 @@ export const useCartStore = defineStore('cart', {
             }
             console.log('appStatus', appStatus.value)
             // el item existe
-            if(appStatus.value === 200) {
-                console.log('este ya existe ',result.value);
+            if (appStatus.value === 200) {
+                console.log('este ya existe ', result.value);
                 newItem.quantity = result.value.quantity + 1;
-                await makeRequest(`cart/${newItem.id}`, {}, "put", 
+                await makeRequest(`cart/${newItem.id}`, {}, "put",
                     newItem
                 );
 
@@ -64,7 +70,7 @@ export const useCartStore = defineStore('cart', {
                 this.cart[position] = {
                     ...newItem
                 }
-                
+
             }
             // el item no existe
             else {
@@ -73,7 +79,7 @@ export const useCartStore = defineStore('cart', {
                 this.length += 1;
             }
 
-            
+
             console.log('newItem', newItem)
         },
         async getAddStore() {
@@ -83,6 +89,36 @@ export const useCartStore = defineStore('cart', {
             this.cart = result;
             this.length = this.cart.length;
         },
-    }
+        increaseQuantity(item) {
+            let newItem = {
+                ...item,
+            }
+            const { makeRequest } = useAsync();
+            newItem.quantity++;
+            makeRequest(`cart/${newItem.id}`, {}, "put",
+                newItem
+            );
+            const cartIncrease = this.cart.map(item => item.id);
+            const position = cartIncrease.indexOf(item.id);
+            this.cart[position] = {
+                ...newItem
+            }
+        },
+        decreaseAmount(item) {
+            let newItem = {
+                ...item,
+            }
+            const { makeRequest } = useAsync();
+            newItem.quantity--;
+            makeRequest(`cart/${newItem.id}`, {}, "put",
+                newItem
+            );
+            const cartIncrease = this.cart.map(item => item.id);
+            const position = cartIncrease.indexOf(item.id);
+            this.cart[position] = {
+                ...newItem
+            }
+        }
+    },
 })
 
