@@ -8,24 +8,26 @@
         <input
           type="text"
           class="form-control"
-          v-model="name"
+          v-model="dataForm.name"
           placeholder="Name"
-          :class="{ 'is-invalid': isNameError }"
+          :class="{ 'is-invalid': hasError('name') }"
         />
-        <div v-if="nameVal" class="invalid-feedback">The product name is required.</div>
+        <div v-if="hasError('name')" class="invalid-feedback">
+          {{ errorObject.errorMessage }}
+        </div>
       </div>
       <div class="form-group col-md-6">
         <label for="inputPassword4">Price</label>
         <input
           type="number"
           class="form-control"
-          v-model="price"
+          v-model="dataForm.price"
           placeholder="Price"
-          :class="{ 'is-invalid': isInvalid }"
+          :class="{ 'is-invalid': hasError('price') }"
         />
-      </div>
-      <div v-if="invalid" class="invalid-feedback">
-        This container should only have alpha numeric features.
+        <div v-if="hasError('price')" class="invalid-feedback">
+          {{ errorObject.errorMessage }}
+        </div>
       </div>
     </div>
 
@@ -33,12 +35,12 @@
       <label for="exampleFormControlTextarea1">Description</label>
       <textarea
         class="form-control"
-        v-model="description"
+        v-model="dataForm.description"
         rows="3"
-        :class="{ 'is-invalid': isDescription }"
+        :class="{ 'is-invalid': hasError('description') }"
       ></textarea>
-      <div v-if="descriVal" class="invalid-feedback">
-        The description must be maximum of 100.
+      <div v-if="hasError('description')" class="invalid-feedback">
+        {{ errorObject.errorMessage }}
       </div>
     </div>
 
@@ -47,9 +49,13 @@
       <input
         type="text"
         class="form-control"
-        v-model="imagen"
+        v-model="dataForm.imagen"
         placeholder="Url Pinteres"
+        :class="{ 'is-invalid': hasError('imagen') }"
       />
+      <div v-if="hasError('imagen')" class="invalid-feedback">
+        {{ errorObject.errorMessage }}
+      </div>
     </div>
 
     <div class="card" style="width: 18rem">
@@ -62,95 +68,129 @@
 
 <script setup>
 import { useAsync } from "../hooks/useAsync";
-import { ref, onMounted, watch } from "vue";
-import { useRoute } from "vue-router";
-import { useRouter } from "vue-router";
+import { reactive, ref, onMounted, computed, watch } from "vue";
+import { useRouter, useRoute } from "vue-router";
 import LoadModel from "./LoadModel.vue";
 import ErrorComponent from "./ErrorComponent.vue";
 import EditImag from "@/assets/imagen.svg";
-
-const router = useRouter();
-const name = ref(null);
-const price = ref(null);
-const description = ref(null);
-const imagen = ref(null);
-const imgEdit = ref(EditImag);
-const title = ref("Ooops!");
-const Message = ref("Something went wrong the site did not charge properly 😣😣");
-const nameVal = ref(false);
-const invalid = ref(false);
-const descriVal = ref(false);
-const isNameError = ref(false);
-const isInvalid = ref(false);
-const isDescription = ref(false);
+import { Joi } from "vue-joi-validation";
 
 const { result, errorData, makeRequest, isLoading } = useAsync();
 const route = useRoute();
 const { id } = route.params;
+const router = useRouter();
+const imgEdit = ref(EditImag);
+const title = ref("Ooops!");
+const Message = ref("Something went wrong the site did not charge properly 😣😣");
 
-const expressions = {
-  name: /^[a-zA-ZÀ-ÿ\s]{1,40}$/,
-  price: /^[0-9]+([.])?([0-9]+)?$/,
-  description: /^[a-zA-ZÀ-ÿ\s]{1,100}$/,
+const dataForm = reactive({
+  name: "",
+  price: "",
+  description: "",
+  imagen: "",
+});
+
+const errorObject = reactive({
+  errorName: "",
+  errorMessage: "",
+});
+
+const datos = {
+  name: Joi.string().required().max(5),
+  price: Joi.number().required(),
+  description: Joi.string().required(),
+  imagen: Joi.string().required(),
 };
 
 onMounted(async () => {
   await makeRequest(`product/${id}`);
-  name.value = result.value.title;
-  price.value = result.value.price;
-  description.value = result.value.description;
-  imagen.value = result.value.imagen;
+  dataForm.name = result.value.title;
+  dataForm.price = result.value.price;
+  dataForm.description = result.value.description;
+  dataForm.imagen = result.value.imagen;
+});
+
+const hasError = computed(() => {
+  return (property) => {
+    return errorObject.errorName === property;
+  };
 });
 
 watch(
-  () => imagen.value,
+  () => dataForm.imagen,
   (val) => {
     if (val) {
       imgEdit.value = val;
     }
-    console.log("Previsualuzacion imagen", imagen);
+    console.log("Previsualuzacion imagen", dataForm);
   }
 );
 
-async function editButton() {
-  if (expressions.name.test(name.value)) {
-    isNameError.value = false;
-  } else {
-    nameVal.value = true;
-    isNameError.value = true;
-  }
+function editButton() {
+  const resultFrom = Joi.validate(dataForm, datos, async (err, value) => {
+    if (err) {
+      console.log("error", err);
+      let starForm = err.message;
+      let starIndex = starForm.indexOf("[") + 1;
+      let endIndex = starForm.indexOf("]");
+      let element = starForm.substring(starIndex, endIndex);
 
-  if (expressions.price.test(price.value)) {
-    isInvalid.value = false;
-  } else {
-    invalid.value = true;
-    isInvalid.value = true;
-  }
+      let cadena2 = element;
 
-  if (expressions.description.test(description.value)) {
-    isDescription.value = false;
-  } else {
-    descriVal.value = true;
-    isLoading.value = true;
-  }
+      const string = cadena2.slice(1);
+      const string2 = string.indexOf('"');
+      const final = string.slice(0, string2);
+      let messageIndix = string.slice(string2 + 1);
 
-  if (
-    expressions.name.test(name.value) &&
-    expressions.price.test(price.value) &&
-    expressions.description.test(description.value)
-  ) {
-    isLoading.value = true;
-
-    await makeRequest(`product/${id}`, {}, "put", {
-      imagen: imagen.value,
-      price: price.value,
-      title: name.value,
-      description: description.value,
-    });
-    isLoading.value = false;
-    router.push({ name: "DetalleProduct", params: { id: result.value.id } });
-  }
+      errorObject.errorName = final;
+      errorObject.errorMessage = messageIndix;
+    } else {
+      isLoading.value = true;
+      await makeRequest(`product/${id}`, {}, "put", {
+        imagen: dataForm.imagen,
+        price: dataForm.price,
+        title: dataForm.name,
+        description: dataForm.description,
+      });
+      isLoading.value = false;
+      router.push({ name: "DetalleProduct", params: { id: result.value.id } });
+    }
+  });
 }
+
+// if (expressions.name.test(name.value)) {
+//   isNameError.value = false;
+// } else {
+//   nameVal.value = true;
+//   isNameError.value = true;
+// }
+// if (expressions.price.test(price.value)) {
+//   isInvalid.value = false;
+// } else {
+//   invalid.value = true;
+//   isInvalid.value = true;
+// }
+// if (expressions.description.test(description.value)) {
+//   isDescription.value = false;
+// } else {
+//   descriVal.value = true;
+//   isLoading.value = true;
+// }
+// if (
+//   expressions.name.test(name.value) &&
+//   expressions.price.test(price.value) &&
+//   expressions.description.test(description.value)
+// ) {
+//   isLoading.value = true;
+//   await makeRequest(`product/${id}`, {}, "put", {
+//     imagen: imagen.value,
+//     price: price.value,
+//     title: name.value,
+//     description: description.value,
+//   });
+//   isLoading.value = false;
+//   router.push({ name: "DetalleProduct", params: { id: result.value.id } });
+//
 </script>
 
 <style scoped>

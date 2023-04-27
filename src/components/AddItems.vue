@@ -8,11 +8,13 @@
         <input
           type="text"
           class="form-control"
-          v-model="name"
+          v-model="dataForm.name"
           placeholder="Name"
-          :class="{ 'is-invalid': isNameError }"
+          :class="{ 'is-invalid': hasError('name') }"
         />
-        <div v-if="nameVal" class="invalid-feedback">The product name is required.</div>
+        <div v-if="hasError('name')" class="invalid-feedback">
+          {{ errorObject.errorMessage }}
+        </div>
       </div>
 
       <div class="form-group col-md-6">
@@ -20,12 +22,12 @@
         <input
           type="number"
           class="form-control"
-          v-model="price"
+          v-model="dataForm.price"
           placeholder="Price"
-          :class="{ 'is-invalid': isInvalid }"
+          :class="{ 'is-invalid': hasError('price') }"
         />
-        <div v-if="invalid" class="invalid-feedback">
-          This container should only have alpha numeric features.
+        <div v-if="hasError('price')" class="invalid-feedback">
+          {{ errorObject.errorMessage }}
         </div>
       </div>
     </div>
@@ -34,12 +36,11 @@
       <label for="exampleFormControlTextarea1">Description</label>
       <textarea
         class="form-control"
-        v-model="description"
-        :class="{ 'is-invalid': isDescription }"
-        rows="3"
+        v-model="dataForm.description"
+        :class="{ 'is-invalid': hasError('description') }"
       ></textarea>
-      <div v-if="descriVal" class="invalid-feedback">
-        The description must be maximum of 100.
+      <div v-if="hasError('description')" class="invalid-feedback">
+        {{ errorObject.errorMessage }}
       </div>
     </div>
 
@@ -48,10 +49,13 @@
       <input
         type="text"
         class="form-control"
-        v-model="imagen"
+        v-model="dataForm.imagen"
         placeholder="Url Pinteres"
+        :class="{ 'is-invalid': hasError('imagen') }"
       />
-      <div class="invalid-feedback">Authorized field for image content only.</div>
+      <div v-if="hasError('imagen')" class="invalid-feedback">
+        {{ errorObject.errorMessage }}
+      </div>
     </div>
 
     <div class="card" style="width: 18rem">
@@ -65,80 +69,83 @@
 <script setup>
 import { useAsync } from "../hooks/useAsync";
 import { useRouter } from "vue-router";
-import { ref, watch } from "vue";
+import { reactive, ref, watch, computed } from "vue";
 import LoadingProduct from "./LoadModel.vue";
 import ErrorComponent from "./ErrorComponent.vue";
 import RefeImag from "@/assets/imagen.svg";
+import { Joi } from "vue-joi-validation";
 
 const { result, makeRequest, errorData } = useAsync();
+const loadingProduct = ref(false);
 const router = useRouter();
 const title = ref("Ooops!");
 const Message = ref("Something went wrong the site did not charge properly 😣😣");
-const loadingProduct = ref(false);
-const imagen = ref(null);
-const price = ref(null);
-const name = ref(null);
-const description = ref(null);
 const imageSrc = ref(RefeImag);
-const nameVal = ref(false);
-const isNameError = ref(false);
-const invalid = ref(false);
-const isInvalid = ref(false);
-const isDescription = ref(false);
-const descriVal = ref(false);
 
-const expressions = {
-  name: /^[a-zA-ZÀ-ÿ\s]{1,40}$/,
-  price: /^[0-9]+([.])?([0-9]+)?$/,
-  description: /^[a-zA-ZÀ-ÿ\s]{1,100}$/,
+const dataForm = reactive({
+  name: "",
+  price: "",
+  description: "",
+  imagen: "",
+});
+
+const errorObject = reactive({
+  errorName: "",
+  errorMessage: "",
+});
+
+const datos = {
+  name: Joi.string().required().max(5),
+  price: Joi.number().positive().precision(2).required(),
+  description: Joi.string().required(),
+  imagen: Joi.string().required(),
 };
 
+const hasError = computed(() => {
+  return (property) => {
+    return errorObject.errorName === property;
+  };
+});
+
 async function createButton() {
-  if (expressions.name.test(name.value)) {
-    isNameError.value = false;
-  } else {
-    nameVal.value = true;
-    isNameError.value = true;
-  }
+  const resultFrom = Joi.validate(dataForm, datos, async (err, value) => {
+    if (err) {
+      console.log("error", err);
+      let starForm = err.message;
+      let starIndex = starForm.indexOf("[") + 1;
+      let endIndex = starForm.indexOf("]");
+      let element = starForm.substring(starIndex, endIndex);
 
-  if (expressions.price.test(price.value)) {
-    isInvalid.value = false;
-  } else {
-    invalid.value = true;
-    isInvalid.value = true;
-  }
+      let cadena2 = element;
 
-  if (expressions.description.test(description.value)) {
-    isDescription.value = false;
-  } else {
-    descriVal.value = true;
-    isDescription.value = true;
-  }
+      const string = cadena2.slice(1);
+      const string2 = string.indexOf('"');
+      const final = string.slice(0, string2);
+      let messageIndix = string.slice(string2 + 1);
 
-  if (
-    expressions.name.test(name.value) &&
-    expressions.price.test(price.value) &&
-    expressions.description.test(description.value)
-  ) {
-    loadingProduct.value = true;
+      errorObject.errorName = final;
+      errorObject.errorMessage = messageIndix;
+    } else {
+      loadingProduct.value = true;
 
-    await makeRequest("product", {}, "POST", {
-      imagen: imagen.value,
-      price: price.value,
-      title: name.value,
-      description: description.value,
-    });
-    imagen.value = "";
-    price.value = "";
-    name.value = "";
-    description.value = "";
-    loadingProduct.value = false;
-    router.push({ name: "DetalleProduct", params: { id: result.value.id } });
-  }
+      await makeRequest("product", {}, "POST", {
+        imagen: dataForm.imagen,
+        price: dataForm.price,
+        title: dataForm.name,
+        description: dataForm.description,
+      });
+      dataForm.imagen = "";
+      dataForm.price = "";
+      dataForm.name = "";
+      dataForm.description = "";
+      loadingProduct.value = false;
+      router.push({ name: "DetalleProduct", params: { id: result.value.id } });
+    }
+  });
 }
 
 watch(
-  () => imagen.value,
+  () => dataForm.imagen,
   (val) => {
     if (val) {
       imageSrc.value = val;

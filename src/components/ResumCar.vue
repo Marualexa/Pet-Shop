@@ -9,26 +9,26 @@
       <tbody>
         <tr>
           <th scope="row">SubTotal:</th>
-          <td>${{ new Intl.NumberFormat("es-US").format(56.387) }}</td>
+          <td>${{ new Intl.NumberFormat("es-US").format(store.getTotalPrice) }}</td>
         </tr>
-        <tr>
+        <!-- <tr>
           <th scope="row">Descuento:</th>
           <td>${{ new Intl.NumberFormat("es-US").format(0) }}</td>
         </tr>
         <tr>
           <th scope="row">Transporte:</th>
-          <td>${{ new Intl.NumberFormat("es-US").format(4.0) }}</td>
-        </tr>
+          <td>${{ new Intl.NumberFormat("es-US").format() }}</td>
+        </tr> -->
         <tr>
           <th scope="row">TOTAL A PAGAR:</th>
-          <td>${{ new Intl.NumberFormat("es-US").format(77.222) }}</td>
+          <td>${{ new Intl.NumberFormat("es-US").format(store.getTotalPrice) }}</td>
         </tr>
       </tbody>
     </table>
     <div class="container text-center">
       <div class="row">
         <div class="col">
-          <button type="button" class="btn btn-success">CONFIRM ORDER</button>
+          <button @click="$emit('confirmOrder')" type="button" class="btn btn-success">CONFIRM ORDER</button>
         </div>
         <div class="col">
           <button type="button" class="btn btn-danger">DISCARD ORDER</button>
@@ -38,7 +38,17 @@
   </div>
 </template>
 
-<script setup></script>
+<script setup>
+import { useCartStore } from '@/store/cartContainer';
+import { useRouter } from "vue-router";
+
+const store = useCartStore();
+const router = useRouter();
+
+function ConfirmOrder() {
+  router.push({ name: "ordenConfirm" });
+}
+</script>
 
 <style>
 .segung-title {

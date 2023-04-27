@@ -4,11 +4,16 @@
       <img :src="imagen" alt="" />
       <div class="product-info">
         <div>
-          <h3>{{ price }}</h3>
+          <h3>${{ new Intl.NumberFormat("es-US").format(price) }}</h3>
           <p>{{ title }}</p>
         </div>
         <figure>
-          <img @click.stop.prevent="store.addItemCart(props)" class="imagen-carrito" src="@/assets/carrito.png" alt="" />
+          <img
+            @click.stop.prevent="store.addItemCart(props)"
+            class="imagen-carrito"
+            src="@/assets/carrito.png"
+            alt=""
+          />
           <img
             @click.stop.prevent="edictProduct($event)"
             class="imagen-edict"
@@ -24,10 +29,10 @@
 <script setup>
 import { toRefs, defineProps } from "vue";
 import { useRouter } from "vue-router";
-import { useCartStore} from "@/store/cartContainer";
+import { useCartStore } from "@/store/cartContainer";
 
 const store = useCartStore();
-console.log('store', store.addItemCart)
+console.log("store", store.addItemCart);
 
 const props = defineProps({
   id: {

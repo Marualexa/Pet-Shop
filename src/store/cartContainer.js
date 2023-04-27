@@ -59,7 +59,6 @@ export const useCartStore = defineStore('cart', {
             console.log('appStatus', appStatus.value)
             // el item existe
             if (appStatus.value === 200) {
-                console.log('este ya existe ', result.value);
                 newItem.quantity = result.value.quantity + 1;
                 await makeRequest(`cart/${newItem.id}`, {}, "put",
                     newItem
@@ -67,9 +66,12 @@ export const useCartStore = defineStore('cart', {
 
                 const copiCart = this.cart.map(item => item.id);
                 const position = copiCart.indexOf(item.id);
-                this.cart[position] = {
+
+                const cartCopy = this.cart;
+                cartCopy[position] = {
                     ...newItem
                 }
+                this.cart = [...cartCopy.value];
 
             }
             // el item no existe
@@ -85,8 +87,7 @@ export const useCartStore = defineStore('cart', {
         async getAddStore() {
             const { makeRequest, result } = useAsync();
             await makeRequest("cart", {});
-            console.log('resultado', result)
-            this.cart = result;
+            this.cart = [...result.value];
             this.length = this.cart.length;
         },
         increaseQuantity(item) {
@@ -100,9 +101,14 @@ export const useCartStore = defineStore('cart', {
             );
             const cartIncrease = this.cart.map(item => item.id);
             const position = cartIncrease.indexOf(item.id);
-            this.cart[position] = {
+
+            const cartCopy = this.cart;
+
+            cartCopy[position] = {
                 ...newItem
             }
+
+            this.cart = [...cartCopy.value];
         },
         decreaseAmount(item) {
             let newItem = {
@@ -115,9 +121,14 @@ export const useCartStore = defineStore('cart', {
             );
             const cartIncrease = this.cart.map(item => item.id);
             const position = cartIncrease.indexOf(item.id);
-            this.cart[position] = {
+
+            const cartCopy = this.cart;
+            
+            cartCopy[position] = {
                 ...newItem
             }
+
+            this.cart = [...cartCopy.value];
         }
     },
 })

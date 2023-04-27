@@ -43,7 +43,7 @@
           </table>
         </div>
         <div class="col-lg-3 col-md-6">
-          <ResumCar />
+          <ResumCar @confirm-order="goToPage" />
         </div>
       </div>
     </div>
@@ -58,6 +58,7 @@ import ResumCar from "./ResumCar.vue";
 
 const store = useCartStore();
 const router = useRouter();
+
 onMounted(() => {
   store.getAddStore();
   console.log('onMounted entra', onMounted)
@@ -65,6 +66,10 @@ onMounted(() => {
 
 function backInict() {
   router.push({ name: "home" });
+}
+
+const goToPage = () => {
+    router.push({ name: "ordenConfirm" })
 }
 </script>
 

@@ -9,7 +9,7 @@
       />
 
       <div class="navbar-left">
-        <img src="../assets/logo.png" alt="logo" class="logo" />
+        <img src="../assets/logo.png" alt="logo" class="logo" @click="takeHome" />
       </div>
 
       <Search />
@@ -61,6 +61,10 @@ function itemsButton() {
 
 function showPiCar() {
   openCart.value = !openCart.value;
+}
+
+function takeHome() {
+  router.push({ name: "home"})
 }
 </script>
 

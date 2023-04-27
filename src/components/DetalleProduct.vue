@@ -17,7 +17,9 @@
         <div class="product-info-detall">
           <div class="row">
             <div class="col-8">
-              <p class="info-price">{{ result ? result.price : "-" }}</p>
+              <p class="info-price">
+                ${{ new Intl.NumberFormat("es-US").format(result ? result.price : "-") }}
+              </p>
             </div>
             <div class="col-4">
               <button @click="delectButton" type="button" class="btn btn-danger">
