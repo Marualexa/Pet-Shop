@@ -33,7 +33,6 @@ export function useAsync() {
             appStatus.value = status;
 
         } catch (error) {
-            // console.error(error);
             isLoading.value = false;
             errorData.value = error;
             appStatus.value = 404;

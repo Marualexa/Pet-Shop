@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import { useAsync } from "../hooks/useAsync";
+import { useAsync } from "@/hooks/useAsync";
 
 export const useCartStore = defineStore('cart', {
     state: () => ({

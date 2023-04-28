@@ -9,9 +9,7 @@
 
 <script setup>
 import { ref } from 'vue';
-import { useAsync } from "../hooks/useAsync";
 
-const { result, errorData, makeRequest, isLoading } = useAsync();
 const search = ref("");
 
 </script>

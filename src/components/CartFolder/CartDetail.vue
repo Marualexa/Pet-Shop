@@ -1,6 +1,6 @@
 <template>
   <div class="container-product">
-    <img @click="backInict" class="arrow-leth" src="../assets/atras.png" alt="atras" />
+    <img @click="backInict" class="arrow-leth" src="@/assets/atras.png" alt="atras" />
     <div class="container text-center">
       <div class="row">
         <div class="col-lg-9 col-md-6">
@@ -18,10 +18,7 @@
             <tbody>
               <tr v-for="product in store.getCartPets" :key="product.id">
                 <th scope="row">
-                  <img
-                    class="img-figure"
-                    :src="product.imagen" alt="bike"
-                  />
+                  <img class="img-figure" :src="product.imagen" alt="bike" />
                   <p>{{ product.title }}</p>
                 </th>
                 <td>
@@ -29,14 +26,28 @@
                     <img class="menos-item" src="@/assets/menos.svg" alt="" />
                   </button>
                   <span>{{ product.quantity }}</span>
-                  <button class="quantity-button" @click="store.increaseQuantity(product)">
+                  <button
+                    class="quantity-button"
+                    @click="store.increaseQuantity(product)"
+                  >
                     <img class="mas-item" src="@/assets/mas.svg" alt="" />
                   </button>
                 </td>
                 <td>${{ new Intl.NumberFormat("es-US").format(product.price) }}</td>
-                <td>${{ new Intl.NumberFormat("es-US").format(store.getPriceBasket(product.id)) }}</td>
                 <td>
-                  <img @click="store.removeItemCart(product)" class="closet" src="../assets/cerrar.png" alt="" />
+                  ${{
+                    new Intl.NumberFormat("es-US").format(
+                      store.getPriceBasket(product.id)
+                    )
+                  }}
+                </td>
+                <td>
+                  <img
+                    @click="store.removeItemCart(product)"
+                    class="closet"
+                    src="@/assets/cerrar.png"
+                    alt=""
+                  />
                 </td>
               </tr>
             </tbody>
@@ -61,7 +72,7 @@ const router = useRouter();
 
 onMounted(() => {
   store.getAddStore();
-  console.log('onMounted entra', onMounted)
+  console.log("onMounted entra", onMounted);
 });
 
 function backInict() {
@@ -69,8 +80,8 @@ function backInict() {
 }
 
 const goToPage = () => {
-    router.push({ name: "ordenConfirm" })
-}
+  router.push({ name: "ordenConfirm" });
+};
 </script>
 
 <style scoped>

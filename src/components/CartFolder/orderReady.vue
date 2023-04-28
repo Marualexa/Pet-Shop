@@ -1,6 +1,6 @@
 <template>
   <div class="container-product">
-    <img class="arrow-leth" src="../assets/atras.png" alt="atras" />
+    <img class="arrow-leth" src="@/assets/atras.png" alt="atras" />
     <p class="title-cart">CONFIRMATION</p>
     <div class="text-center ng-star-inserted">
       <h2 class="title-section mt-4">

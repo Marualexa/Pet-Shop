@@ -19,9 +19,9 @@
 
 <script setup>
 import productCard from "./productCard.vue";
-import Pagination from "./PaginationButton.vue";
+import Pagination from "../Navegacion/PaginationButton.vue";
 import { toRefs, defineProps, inject } from "vue";
-import MenuMovil from "./MenuMovil.vue";
+import MenuMovil from "../Navegacion/MenuMovil.vue";
 
 const props = defineProps({
   arrayItem: {

@@ -15,11 +15,11 @@
 </template>
 
 <script setup>
-import LoadModel from "./LoadModel.vue";
+import LoadModel from "../Navegacion/LoadModel.vue";
 import ErrorComponent from "./ErrorComponent.vue";
 import { defineEmits } from "vue";
 import { useRoute } from "vue-router";
-import { useAsync } from "../hooks/useAsync";
+import { useAsync } from "@/hooks/useAsync";
 import { useRouter } from "vue-router";
 
 const { errorData, makeRequest, isLoading } = useAsync();

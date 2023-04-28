@@ -3,21 +3,21 @@
     <div class="container">
       <img
         @click="resposibleMenu"
-        src="../assets/icon_menu.svg"
+        src="@/assets/icon_menu.svg"
         alt="menu"
         class="menu"
       />
 
       <div class="navbar-left">
-        <img src="../assets/logo.png" alt="logo" class="logo" @click="takeHome" />
+        <img src="@/assets/logo.png" alt="logo" class="logo" @click="takeHome" />
       </div>
 
       <Search />
-  
+
       <div class="items-product inactive">
         <div class="button-item">
           <button @click="itemsButton" type="button" class="btn btn-outline-success">
-            <img class="primary-button" src="../assets/editar.svg" alt="" />
+            <img class="primary-button" src="@/assets/editar.svg" alt="" />
           </button>
         </div>
 
@@ -26,7 +26,7 @@
             <li class="navbar-shopping-cart">
               <img
                 @click="showPiCar()"
-                src="../assets/icon_shopping_cart.svg"
+                src="@/assets/icon_shopping_cart.svg"
                 alt="shopping cart"
               />
               <div>{{ store.getCartLength }}</div>
@@ -42,14 +42,14 @@
 <script setup>
 import { useRouter } from "vue-router";
 import Search from "./searchProduct.vue";
-import MyOrder from "./MyOrder.vue";
+import MyOrder from "../CartFolder/MyOrder.vue";
 import { ref } from "vue";
-import { useCartStore} from "@/store/cartContainer";
+import { useCartStore } from "@/store/cartContainer";
 
 const store = useCartStore();
 
 const router = useRouter();
-const openCart = ref(false)
+const openCart = ref(false);
 
 function resposibleMenu() {
   showMenu(!showBurge.value);
@@ -64,7 +64,7 @@ function showPiCar() {
 }
 
 function takeHome() {
-  router.push({ name: "home"})
+  router.push({ name: "home" });
 }
 </script>
 

@@ -11,14 +11,6 @@
           <th scope="row">SubTotal:</th>
           <td>${{ new Intl.NumberFormat("es-US").format(store.getTotalPrice) }}</td>
         </tr>
-        <!-- <tr>
-          <th scope="row">Descuento:</th>
-          <td>${{ new Intl.NumberFormat("es-US").format(0) }}</td>
-        </tr>
-        <tr>
-          <th scope="row">Transporte:</th>
-          <td>${{ new Intl.NumberFormat("es-US").format() }}</td>
-        </tr> -->
         <tr>
           <th scope="row">TOTAL A PAGAR:</th>
           <td>${{ new Intl.NumberFormat("es-US").format(store.getTotalPrice) }}</td>
@@ -28,7 +20,9 @@
     <div class="container text-center">
       <div class="row">
         <div class="col">
-          <button @click="$emit('confirmOrder')" type="button" class="btn btn-success">CONFIRM ORDER</button>
+          <button @click="$emit('confirmOrder')" type="button" class="btn btn-success">
+            CONFIRM ORDER
+          </button>
         </div>
         <div class="col">
           <button type="button" class="btn btn-danger">DISCARD ORDER</button>
@@ -39,7 +33,7 @@
 </template>
 
 <script setup>
-import { useCartStore } from '@/store/cartContainer';
+import { useCartStore } from "@/store/cartContainer";
 import { useRouter } from "vue-router";
 
 const store = useCartStore();
@@ -55,6 +49,6 @@ function ConfirmOrder() {
   color: #ffacac;
 }
 .col {
-    padding: 10px;
+  padding: 10px;
 }
 </style>

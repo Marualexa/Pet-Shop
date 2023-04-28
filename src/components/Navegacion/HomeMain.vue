@@ -9,10 +9,10 @@
 <script setup>
 import LoadModel from "./LoadModel.vue";
 import { ref, provide, watch, onMounted } from "vue";
-import { useAsync } from "../hooks/useAsync";
+import { useAsync } from "@/hooks/useAsync";
 import { useRoute } from "vue-router";
-import ListProduct from "./ListProduct.vue";
-import ErrorComponent from "./ErrorComponent.vue";
+import ListProduct from "../ProductFolder/ListProduct.vue";
+import ErrorComponent from "../errorHandling/ErrorComponent.vue";
 import { useCartStore} from "@/store/cartContainer";
 
 const route = useRoute();

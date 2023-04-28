@@ -8,7 +8,7 @@
         <img
           @click="backInict"
           class="arrow-leth"
-          src="../assets/atras.png"
+          src="@/assets/atras.png"
           alt="atras"
         />
 
@@ -37,11 +37,11 @@
 </template>
 
 <script setup>
-import LoadModel from "./LoadModel.vue";
-import ErrorComponent from "./ErrorComponent.vue";
-import DelectModal from "./DelectModal.vue";
+import LoadModel from "../Navegacion/LoadModel.vue";
+import ErrorComponent from "../errorHandling/ErrorComponent.vue";
+import DelectModal from "../errorHandling/DelectModal.vue";
 import { useRoute, useRouter } from "vue-router";
-import { useAsync } from "../hooks/useAsync";
+import { useAsync } from "@/hooks/useAsync";
 import { onMounted, ref } from "vue";
 
 const title = ref("Ooops!");

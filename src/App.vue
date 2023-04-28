@@ -1,5 +1,5 @@
 <script setup>
-import HeaderMenu from "./components/HeaderMenu.vue";
+import HeaderMenu from "@/components/Navegacion/HeaderMenu.vue";
 import { ref, provide } from "vue";
 
 const showBurge = ref(false);
