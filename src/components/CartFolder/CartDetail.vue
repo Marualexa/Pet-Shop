@@ -1,60 +1,67 @@
 <template>
-  <div class="container-product">
-    <img @click="backInict" class="arrow-leth" src="@/assets/atras.png" alt="atras" />
-    <div class="container text-center">
-      <div class="row">
-        <div class="col-lg-9 col-md-6">
-          <p class="title-cart">CART DETAILS</p>
-          <table class="table">
-            <thead class="table-danger">
-              <tr>
-                <th scope="col">Product</th>
-                <th scope="col">Quantity</th>
-                <th scope="col">Unit value</th>
-                <th scope="col">SubTotal</th>
-                <th scope="col"></th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr v-for="product in store.getCartPets" :key="product.id">
-                <th scope="row">
-                  <img class="img-figure" :src="product.imagen" alt="bike" />
-                  <p>{{ product.title }}</p>
-                </th>
-                <td>
-                  <button class="quantity-button" @click="store.decreaseAmount(product)">
-                    <img class="menos-item" src="@/assets/menos.svg" alt="" />
-                  </button>
-                  <span>{{ product.quantity }}</span>
-                  <button
-                    class="quantity-button"
-                    @click="store.increaseQuantity(product)"
-                  >
-                    <img class="mas-item" src="@/assets/mas.svg" alt="" />
-                  </button>
-                </td>
-                <td>${{ new Intl.NumberFormat("es-US").format(product.price) }}</td>
-                <td>
-                  ${{
-                    new Intl.NumberFormat("es-US").format(
-                      store.getPriceBasket(product.id)
-                    )
-                  }}
-                </td>
-                <td>
-                  <img
-                    @click="store.removeItemCart(product)"
-                    class="closet"
-                    src="@/assets/cerrar.png"
-                    alt=""
-                  />
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <div class="col-lg-3 col-md-6">
-          <ResumCar @confirm-order="goToPage" />
+  <div class="detail-container">
+    <div class="arrow">
+      <img @click="backInict" class="arrow-leth" src="@/assets/atras.png" alt="atras" />
+    </div>
+    <div class="container-product">
+      <div class="container text-center">
+        <div class="row">
+          <div class="col-lg-9 col-md-7">
+            <p class="title-cart">CART DETAILS</p>
+            <table class="table">
+              <thead class="table-danger">
+                <tr>
+                  <th scope="col">Product</th>
+                  <th scope="col">Quantity</th>
+                  <th scope="col">Unit value</th>
+                  <th scope="col">SubTotal</th>
+                  <th scope="col"></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="product in store.getCartPets" :key="product.id">
+                  <th scope="row">
+                    <img class="img-figure" :src="product.imagen" alt="bike" />
+                    <p>{{ product.title }}</p>
+                  </th>
+                  <td>
+                    <button
+                      class="quantity-button"
+                      @click="store.decreaseAmount(product)"
+                    >
+                      <img class="menos-item" src="@/assets/menos.svg" alt="" />
+                    </button>
+                    <span>{{ product.quantity }}</span>
+                    <button
+                      class="quantity-button"
+                      @click="store.increaseQuantity(product)"
+                    >
+                      <img class="mas-item" src="@/assets/mas.svg" alt="" />
+                    </button>
+                  </td>
+                  <td>${{ new Intl.NumberFormat("es-US").format(product.price) }}</td>
+                  <td>
+                    ${{
+                      new Intl.NumberFormat("es-US").format(
+                        store.getPriceBasket(product.id)
+                      )
+                    }}
+                  </td>
+                  <td>
+                    <img
+                      @click="store.removeItemCart(product)"
+                      class="closet"
+                      src="@/assets/cerrar.png"
+                      alt=""
+                    />
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="col-lg-3 col-md-3">
+            <ResumCar @confirm-order="goToPage" />
+          </div>
         </div>
       </div>
     </div>
@@ -66,9 +73,11 @@ import { useRouter } from "vue-router";
 import { useCartStore } from "@/store/cartContainer";
 import { onMounted } from "vue";
 import ResumCar from "./ResumCar.vue";
+import { useAsync } from "@/hooks/useAsync";
 
 const store = useCartStore();
 const router = useRouter();
+const { result, makeRequest, errorData } = useAsync();
 
 onMounted(() => {
   store.getAddStore();
@@ -79,12 +88,32 @@ function backInict() {
   router.push({ name: "home" });
 }
 
-const goToPage = () => {
-  router.push({ name: "ordenConfirm" });
+const goToPage = async () => {
+  await makeRequest("order", {}, "POST", {
+    products: store.getCartPets,
+    total: store.getTotalPrice,
+    name: "",
+    lastName: "",
+    identification: "",
+    cell: "",
+    city: "",
+    destination: "",
+    email: "",
+    meansOfPayment: "Tarjeta Crédito o Débito",
+    paymentStatus: "No pagado",
+  });
+  console.log("result", result);
+  router.push({ name: "ordenConfirm", params: { id: result.value.id } });
 };
 </script>
 
 <style scoped>
+.detail-container {
+  display: grid;
+  grid-template-columns: 30px 1fr;
+  justify-content: center;
+  align-items: center;
+}
 .container-product {
   padding-top: 20px;
 }
@@ -137,11 +166,14 @@ const goToPage = () => {
   object-fit: contain;
   color: brown;
 }
+.arrow {
+  width: 100%;
+  height: 100%;
+}
 .arrow-leth {
-  width: 45px;
-  height: 45px;
-  z-index: 2;
+  width: 50px;
+  height: 50px;
   padding: 12px;
-  border-radius: 50%;
+  margin-top: 10px;
 }
 </style>

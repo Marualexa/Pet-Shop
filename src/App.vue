@@ -1,6 +1,9 @@
 <script setup>
 import HeaderMenu from "@/components/Navegacion/HeaderMenu.vue";
 import { ref, provide } from "vue";
+import { useCartStore } from "@/store/cartContainer";
+
+const store = useCartStore();
 
 const showBurge = ref(false);
 
@@ -13,13 +16,18 @@ provide('showBurge', {
   showMenu
 });
 
-</script>
+function general() {
+  if(store.neglectingCart === true) {
+    !store.neglectingCart()
+  }
+}
 
+</script>
 <template>
 <div>
   <HeaderMenu />
 </div>
-<router-view />
+<router-view @click="general"/>
 </template>
 
 

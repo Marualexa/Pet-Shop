@@ -1,69 +1,74 @@
 <template>
   <LoadingProduct v-if="loadingProduct && !errorData" />
   <ErrorComponent :title="title" :Message="Message" v-if="errorData && !loadingProduct" />
-  <form @submit.prevent="createButton" class="container-items" novalidate>
-    <div class="form-row">
-      <div class="form-group col-md-6">
-        <label for="inputEmail4">Name</label>
+  <div class="container-add">
+    <div class="arrow">
+      <img @click="backInict" class="arrow-leth" src="@/assets/atras.png" alt="atras" />
+    </div>
+    <form @submit.prevent="createButton" class="container-items" novalidate>
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="inputEmail4">Name</label>
+          <input
+            type="text"
+            class="form-control"
+            v-model="dataForm.name"
+            placeholder="Name"
+            :class="{ 'is-invalid': hasError('name') }"
+          />
+          <div v-if="hasError('name')" class="invalid-feedback">
+            {{ errorObject.errorMessage }}
+          </div>
+        </div>
+
+        <div class="form-group col-md-6">
+          <label for="inputPassword4">Price</label>
+          <input
+            type="number"
+            class="form-control"
+            v-model="dataForm.price"
+            placeholder="Price"
+            :class="{ 'is-invalid': hasError('price') }"
+          />
+          <div v-if="hasError('price')" class="invalid-feedback">
+            {{ errorObject.errorMessage }}
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="exampleFormControlTextarea1">Description</label>
+        <textarea
+          class="form-control"
+          v-model="dataForm.description"
+          :class="{ 'is-invalid': hasError('description') }"
+        ></textarea>
+        <div v-if="hasError('description')" class="invalid-feedback">
+          {{ errorObject.errorMessage }}
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="inputAddress2">Url Pinteres</label>
         <input
           type="text"
           class="form-control"
-          v-model="dataForm.name"
-          placeholder="Name"
-          :class="{ 'is-invalid': hasError('name') }"
+          v-model="dataForm.imagen"
+          placeholder="Url Pinteres"
+          :class="{ 'is-invalid': hasError('imagen') }"
         />
-        <div v-if="hasError('name')" class="invalid-feedback">
+        <div v-if="hasError('imagen')" class="invalid-feedback">
           {{ errorObject.errorMessage }}
         </div>
       </div>
 
-      <div class="form-group col-md-6">
-        <label for="inputPassword4">Price</label>
-        <input
-          type="number"
-          class="form-control"
-          v-model="dataForm.price"
-          placeholder="Price"
-          :class="{ 'is-invalid': hasError('price') }"
-        />
-        <div v-if="hasError('price')" class="invalid-feedback">
-          {{ errorObject.errorMessage }}
-        </div>
+      <div class="card" style="width: 18rem">
+        <img class="card-img-top" :src="imageSrc" alt="" />
       </div>
-    </div>
 
-    <div class="form-group">
-      <label for="exampleFormControlTextarea1">Description</label>
-      <textarea
-        class="form-control"
-        v-model="dataForm.description"
-        :class="{ 'is-invalid': hasError('description') }"
-      ></textarea>
-      <div v-if="hasError('description')" class="invalid-feedback">
-        {{ errorObject.errorMessage }}
-      </div>
-    </div>
-
-    <div class="form-group">
-      <label for="inputAddress2">Url Pinteres</label>
-      <input
-        type="text"
-        class="form-control"
-        v-model="dataForm.imagen"
-        placeholder="Url Pinteres"
-        :class="{ 'is-invalid': hasError('imagen') }"
-      />
-      <div v-if="hasError('imagen')" class="invalid-feedback">
-        {{ errorObject.errorMessage }}
-      </div>
-    </div>
-
-    <div class="card" style="width: 18rem">
-      <img class="card-img-top" :src="imageSrc" alt="" />
-    </div>
-
-    <button class="btn btn-outline-success">Create</button>
-  </form>
+      <button class="btn btn-outline-success">Create</button>
+    </form>
+  </div>
 </template>
 
 <script setup>
@@ -81,6 +86,10 @@ const router = useRouter();
 const title = ref("Ooops!");
 const Message = ref("Something went wrong the site did not charge properly 😣😣");
 const imageSrc = ref(RefeImag);
+
+function backInict() {
+  router.push({ name: "home" });
+}
 
 const dataForm = reactive({
   name: "",
@@ -156,20 +165,28 @@ watch(
 </script>
 
 <style scoped>
+.container-add {
+  display: grid;
+  grid-template-columns: 30px 1fr;
+  justify-content: center;
+  align-items: center;
+}
 .container-items {
   display: grid;
   justify-content: center;
   align-items: center;
-  width: 100vw;
-  position: absolute;
+  width: 100%;
   margin-top: 15px;
-  border-radius: 20px;
 }
-
-.btn {
-  width: 90px;
-  height: 40px;
-  text-align: center;
+.arrow {
+  width: 100%;
+  height: 100%;
+}
+.arrow-leth {
+  width: 50px;
+  height: 50px;
+  padding: 12px;
+  margin-top: 10px;
 }
 .btn-outline-success {
   color: #a75d5d;

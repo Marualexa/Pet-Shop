@@ -1,89 +1,61 @@
 <template>
-	<div class="mobile-menu">
-    	<ul>
-      		<li>
-        		<a href="/">CATEGORIES</a>
-      		</li>
-      		<li>
-       			<a href="/">All</a>
-      		</li>
-      		<li>
-        		<a href="/">Clothes</a>
-      		</li>
-      		<li>
-        		<a href="/">Electronics</a>
-      		</li>
-      		<li>
-        		<a href="/">Furnitures</a>
-      		</li>
-      		<li>
-        		<a href="/">Toys</a>
-      		</li>
-      		<li>
-        		<a href="/">Other</a>
-      		</li>
-    	</ul>
+  <div class="mobile-menu">
+    <ul>
+      <li>
+        <a href="/login">Login</a>
+      </li>
+      <li>
+        <a href="/registro">Sign Up</a>
+      </li>
+    </ul>
 
-    	<ul>
-      		<li>
-        		<a href="/">My orders</a>
-      		</li>
-      		<li>
-        		<a href="/">My account</a>
-      		</li>
-    	</ul>
+    <ul>
+      <li>
+        <a href="/">My account</a>
+      </li>
+    </ul>
 
-    	<ul>
-      		<li>
-        		<a href="/" class="email">platzi@example.com</a>
-      		</li>
-      		<li>
-        		<a href="/" class="sign-out">Sign out</a>
-      		</li>
-    	</ul>
-    </div>
+    <ul>
+      <li>
+        <a href="/" class="sign-out">Sign out</a>
+      </li>
+    </ul>
+  </div>
 </template>
 
-
-
 <style>
-:root {
-      --white: #FFFFFF;
-      --black: #000000;
-      --very-light-pink: #C7C7C7;
-      --text-input-field: #F7F7F7;
-      --hospital-green: #ACD9B2;
-      --sm: 14px;
-      --md: 16px;
-      --lg: 18px;
-    }
-
-    .mobile-menu {
-      padding: 24px;
-    }
-    .mobile-menu a {
-      text-decoration: none;
-      color: var(--black);
-      font-weight: bold;
-      /* margin-bottom: 24px; */
-    }
-    .mobile-menu ul {
-      padding: 0;
-      margin: 24px 0 0;
-      list-style: none;
-    }
-    .mobile-menu ul:nth-child(1) {
-      border-bottom: 1px solid var(--very-light-pink);
-    }
-    .mobile-menu ul li {
-      margin-bottom: 24px;
-    }
-    .email {
-      font-size: var(--sm);
-      font-weight: 300 !important;
-    }
-    .sign-out {
-      font-size: var(--sm);
-      color: var(--hospital-green) !important;
-    }
-  </style>
+.mobile-menu {
+  width: 315px;
+  position: absolute;
+  z-index: 10;
+  padding: 20px;
+  background-color: #f7f7f7;
+  left: 10px;
+  border-radius: 50px;
+  margin-top: 15px;
+}
+.mobile-menu a {
+  text-decoration: none;
+  color: #000000;
+  font-weight: bold;
+}
+.mobile-menu ul {
+  padding: 0;
+  margin: 24px 0 0;
+  list-style: none;
+}
+.mobile-menu ul:nth-child(1) {
+  border-bottom: 1px solid #c7c7c7;
+}
+.mobile-menu ul li {
+  margin-bottom: 24px;
+}
+.email {
+  font-size: 14px;
+  font-weight: 300 !important;
+}
+.sign-out {
+  font-size: 14px;
+  color: #ffacac !important;
+}
+</style>

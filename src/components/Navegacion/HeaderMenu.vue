@@ -1,39 +1,52 @@
 <template>
-  <div>
-    <div class="container">
-      <img
-        @click="resposibleMenu"
-        src="@/assets/icon_menu.svg"
-        alt="menu"
-        class="menu"
-      />
+  <div class="container">
+      <img @click="resposibleMenu" src="@/assets/icon_menu.svg" alt="menu" class="menu" />
+      <MenuMovil v-if="showBurge" />
 
-      <div class="navbar-left">
-        <img src="@/assets/logo.png" alt="logo" class="logo" @click="takeHome" />
+    <div class="btn-group button-regist" role="group">
+      <span class="img-span"
+        ><img class="ingret" src="@/assets/acceso.png" alt=""
+      /></span>
+      <button
+        type="button"
+        class="btn btn-outline-primary dropdown-toggle"
+        data-bs-toggle="dropdown"
+        aria-expanded="false"
+      >
+        ENTER
+      </button>
+      <ul class="dropdown-menu">
+        <li><a class="dropdown-item" href="#">Login</a></li>
+        <li><a class="dropdown-item" href="#">Sign Up</a></li>
+      </ul>
+    </div>
+
+    <div class="navbar-left">
+      <img src="@/assets/logo.png" alt="logo" class="logo" @click="takeHome" />
+    </div>
+
+    <div class="items-product inactive">
+      <div class="button-item">
+        <img
+          @click="itemsButton"
+          class="primary-button"
+          src="@/assets/editar.svg"
+          alt=""
+        />
       </div>
 
-      <Search />
-
-      <div class="items-product inactive">
-        <div class="button-item">
-          <button @click="itemsButton" type="button" class="btn btn-outline-success">
-            <img class="primary-button" src="@/assets/editar.svg" alt="" />
-          </button>
-        </div>
-
-        <div class="navbar-right">
-          <ul>
-            <li class="navbar-shopping-cart">
-              <img
-                @click="showPiCar()"
-                src="@/assets/icon_shopping_cart.svg"
-                alt="shopping cart"
-              />
-              <div>{{ store.getCartLength }}</div>
-              <MyOrder v-if="openCart" />
-            </li>
-          </ul>
-        </div>
+      <div class="navbar-right">
+        <ul>
+          <li class="navbar-shopping-cart">
+            <img
+              @click="showPiCar()"
+              src="@/assets/icon_shopping_cart.svg"
+              alt="shopping cart"
+            />
+            <div>{{ store.getCartLength }}</div>
+            <MyOrder v-if="store.getOpenCart" />
+          </li>
+        </ul>
       </div>
     </div>
   </div>
@@ -41,15 +54,17 @@
 
 <script setup>
 import { useRouter } from "vue-router";
-import Search from "./searchProduct.vue";
+import MenuMovil from "../Navegacion/MenuMovil.vue";
 import MyOrder from "../CartFolder/MyOrder.vue";
-import { ref } from "vue";
+import { ref, inject } from "vue";
 import { useCartStore } from "@/store/cartContainer";
 
 const store = useCartStore();
 
+const { showMenu, showBurge } = inject("showBurge");
+
 const router = useRouter();
-const openCart = ref(false);
+const getOpenCart = ref(false);
 
 function resposibleMenu() {
   showMenu(!showBurge.value);
@@ -60,7 +75,7 @@ function itemsButton() {
 }
 
 function showPiCar() {
-  openCart.value = !openCart.value;
+  store.neglectingCart();
 }
 
 function takeHome() {
@@ -69,20 +84,6 @@ function takeHome() {
 </script>
 
 <style scoped>
-:root {
-  --white: #c7c7c7;
-  --black: #000000;
-  --very-light-pink: #ffacac;
-  --text-input-field: #ffbfa9;
-  --hospital-green: #fbffb1;
-  --sm: 14px;
-  --md: 16px;
-  --lg: 18px;
-}
-body {
-  margin: 0;
-  font-family: "Quicksand", sans-serif;
-}
 .container {
   display: flex;
   justify-content: space-between;
@@ -166,12 +167,7 @@ body {
 .button-item {
   display: flex;
   justify-content: end;
-  margin: 25px;
-}
-.btn {
-  width: 30px;
-  height: 30px;
-  padding: 5px;
+  margin: 30px;
 }
 
 .btn-outline-success {
@@ -191,12 +187,44 @@ body {
   height: 20px;
   vertical-align: baseline;
 }
+.btn {
+  border: none;
+}
+
+.ingret {
+  width: 30px;
+  height: 30px;
+  object-fit: cover;
+}
+
+.btn-group {
+  place-items: center;
+  border-radius: 10px;
+}
+
+.btn-group :hover {
+  color: #fff;
+  background-color: #c7c7c7;
+  border: none;
+}
+.img-span {
+  padding: 3px;
+  border-radius: 10px 0 0 10px;
+  background-color: #ffacac;
+}
+.btn-outline-primary {
+  color: #ffacac;
+  background-color: #fff;
+}
 
 @media (max-width: 800px) {
   .menu {
     display: block;
   }
   .navbar-left ul {
+    display: none;
+  }
+  .button-regist {
     display: none;
   }
 }

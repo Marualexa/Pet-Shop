@@ -1,27 +1,28 @@
 <template>
-  <div>
+  <div class="container-product">
     <LoadModel v-if="!errorData && isLoading" />
     <ErrorComponent :title="title" :Message="Message" v-if="errorData && !isLoading" />
     <DelectModal v-if="showDeleteModal" @closet-modal="ModalEvent" />
     <div class="product-container" v-if="!errorData && !isLoading">
       <aside class="product-detail">
-        <img
-          @click="backInict"
-          class="arrow-leth"
-          src="@/assets/atras.png"
-          alt="atras"
-        />
-
-        <img class="imagen-detail" :src="result ? result.imagen : '-'" alt="bike" />
-
+        <div class="arrow">
+          <img
+            @click="backInict"
+            class="arrow-leth"
+            src="@/assets/atras.png"
+            alt="atras"
+          />
+        </div>
         <div class="product-info-detall">
-          <div class="row">
-            <div class="col-8">
+          <img class="imagen-detail" :src="result ? result.imagen : '-'" alt="bike" />
+
+          <div class="grid">
+            <div class="price">
               <p class="info-price">
                 ${{ new Intl.NumberFormat("es-US").format(result ? result.price : "-") }}
               </p>
             </div>
-            <div class="col-4">
+            <div class="button">
               <button @click="delectButton" type="button" class="btn btn-danger">
                 Delete
               </button>
@@ -77,34 +78,34 @@ function ModalEvent(arg) {
 }
 </script>
 
-<style>
+<style scoped>
+.container-product {
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  min-width: 100px;
+}
 .product-detail {
   display: grid;
   justify-content: center;
   align-items: center;
-  width: 100vw;
-  position: absolute;
+  width: 100%;
   margin-top: 15px;
-  border-radius: 20px;
+  grid-template-columns: 30px 1fr;
 }
 
+.arrow {
+  width: 100%;
+  height: 100%;
+}
 .arrow-leth {
   width: 50px;
   height: 50px;
-  position: absolute;
-  top: calc(25% - 100px);
-  left: calc(87% - 68%);
-  z-index: 2;
   padding: 12px;
-  border-radius: 50%;
-}
-
-.arrow-leth:hover {
-  cursor: pointer;
 }
 
 .imagen-detail {
-  width: 100%;
+  width: 400px;
   height: 360px;
   object-fit: cover;
   border-radius: 20px 20px 0 0;
@@ -113,7 +114,8 @@ function ModalEvent(arg) {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  margin: 24px 24px 0 24px;
+  margin: 20px;
+  width: 393px;
 }
 .info-price {
   display: grid;
@@ -133,63 +135,25 @@ function ModalEvent(arg) {
   font-size: 20px;
   margin: 0 4px 4px 10px;
 }
-.btn {
-  width: 90px;
-  align-self: end;
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  margin-top: 10px;
 }
-.row {
-  margin-right: -283px;
-  margin-bottom: 15px;
-}
-.col-4 {
+.button {
   display: flex;
-  justify-content: end;
+  justify-content: flex-end;
 }
 
 @media (max-width: 450px) {
   .product-detail {
     width: 100%;
   }
-
-  .product-detail-close {
-    width: 20px;
-    height: 14px;
-    position: absolute;
-    top: 24px;
-    left: 12px;
-    z-index: 2;
-    padding: 12px;
-    border-radius: 50%;
-  }
 }
 
 @media (max-width: 750px) {
   .product-detail {
     width: 100%;
-  }
-
-  .product-detail-close {
-    width: 20px;
-    height: 14px;
-    position: absolute;
-    top: 24px;
-    left: 12px;
-    z-index: 2;
-    padding: 12px;
-    border-radius: 50%;
-  }
-}
-
-@media (max-width: 900px) {
-  .product-detail-close {
-    width: 20px;
-    height: 14px;
-    position: absolute;
-    top: 24px;
-    left: 12px;
-    z-index: 2;
-    padding: 12px;
-    border-radius: 50%;
   }
 }
 </style>

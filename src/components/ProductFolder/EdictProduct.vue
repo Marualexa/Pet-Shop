@@ -1,69 +1,74 @@
 <template>
   <LoadModel v-if="!errorData && isLoading" />
   <ErrorComponent :title="title" :Message="Message" v-if="errorData && !isLoading" />
-  <form @submit.prevent="editButton" class="container-edict">
-    <div class="form-row">
-      <div class="form-group col-md-6">
-        <label for="inputEmail4">Name</label>
+  <div class="container-edic">
+    <div class="arrow">
+      <img @click="backInict" class="arrow-leth" src="@/assets/atras.png" alt="atras" />
+    </div>
+    <form @submit.prevent="editButton" class="container-edict">
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="inputEmail4">Name</label>
+          <input
+            type="text"
+            class="form-control"
+            v-model="dataForm.name"
+            placeholder="Name"
+            :class="{ 'is-invalid': hasError('name') }"
+          />
+          <div v-if="hasError('name')" class="invalid-feedback">
+            {{ errorObject.errorMessage }}
+          </div>
+        </div>
+        <div class="form-group col-md-6">
+          <label for="inputPassword4">Price</label>
+          <input
+            type="number"
+            class="form-control"
+            v-model="dataForm.price"
+            placeholder="Price"
+            :class="{ 'is-invalid': hasError('price') }"
+          />
+          <div v-if="hasError('price')" class="invalid-feedback">
+            {{ errorObject.errorMessage }}
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="exampleFormControlTextarea1">Description</label>
+        <textarea
+          class="form-control"
+          v-model="dataForm.description"
+          rows="3"
+          :class="{ 'is-invalid': hasError('description') }"
+        ></textarea>
+        <div v-if="hasError('description')" class="invalid-feedback">
+          {{ errorObject.errorMessage }}
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="inputAddress2">Url Pinteres</label>
         <input
           type="text"
           class="form-control"
-          v-model="dataForm.name"
-          placeholder="Name"
-          :class="{ 'is-invalid': hasError('name') }"
+          v-model="dataForm.imagen"
+          placeholder="Url Pinteres"
+          :class="{ 'is-invalid': hasError('imagen') }"
         />
-        <div v-if="hasError('name')" class="invalid-feedback">
+        <div v-if="hasError('imagen')" class="invalid-feedback">
           {{ errorObject.errorMessage }}
         </div>
       </div>
-      <div class="form-group col-md-6">
-        <label for="inputPassword4">Price</label>
-        <input
-          type="number"
-          class="form-control"
-          v-model="dataForm.price"
-          placeholder="Price"
-          :class="{ 'is-invalid': hasError('price') }"
-        />
-        <div v-if="hasError('price')" class="invalid-feedback">
-          {{ errorObject.errorMessage }}
-        </div>
+
+      <div class="card" style="width: 18rem">
+        <img class="card-img-top" :src="imgEdit" alt="" />
       </div>
-    </div>
 
-    <div class="form-group">
-      <label for="exampleFormControlTextarea1">Description</label>
-      <textarea
-        class="form-control"
-        v-model="dataForm.description"
-        rows="3"
-        :class="{ 'is-invalid': hasError('description') }"
-      ></textarea>
-      <div v-if="hasError('description')" class="invalid-feedback">
-        {{ errorObject.errorMessage }}
-      </div>
-    </div>
-
-    <div class="form-group">
-      <label for="inputAddress2">Url Pinteres</label>
-      <input
-        type="text"
-        class="form-control"
-        v-model="dataForm.imagen"
-        placeholder="Url Pinteres"
-        :class="{ 'is-invalid': hasError('imagen') }"
-      />
-      <div v-if="hasError('imagen')" class="invalid-feedback">
-        {{ errorObject.errorMessage }}
-      </div>
-    </div>
-
-    <div class="card" style="width: 18rem">
-      <img class="card-img-top" :src="imgEdit" alt="" />
-    </div>
-
-    <button class="btn btn-primary">Edit</button>
-  </form>
+      <button class="btn btn-primary">Edit</button>
+    </form>
+  </div>
 </template>
 
 <script setup>
@@ -82,6 +87,10 @@ const router = useRouter();
 const imgEdit = ref(EditImag);
 const title = ref("Ooops!");
 const Message = ref("Something went wrong the site did not charge properly 😣😣");
+
+function backInict() {
+  router.push({ name: "home" });
+}
 
 const dataForm = reactive({
   name: "",
@@ -157,50 +166,31 @@ function editButton() {
     }
   });
 }
-
-// if (expressions.name.test(name.value)) {
-//   isNameError.value = false;
-// } else {
-//   nameVal.value = true;
-//   isNameError.value = true;
-// }
-// if (expressions.price.test(price.value)) {
-//   isInvalid.value = false;
-// } else {
-//   invalid.value = true;
-//   isInvalid.value = true;
-// }
-// if (expressions.description.test(description.value)) {
-//   isDescription.value = false;
-// } else {
-//   descriVal.value = true;
-//   isLoading.value = true;
-// }
-// if (
-//   expressions.name.test(name.value) &&
-//   expressions.price.test(price.value) &&
-//   expressions.description.test(description.value)
-// ) {
-//   isLoading.value = true;
-//   await makeRequest(`product/${id}`, {}, "put", {
-//     imagen: imagen.value,
-//     price: price.value,
-//     title: name.value,
-//     description: description.value,
-//   });
-//   isLoading.value = false;
-//   router.push({ name: "DetalleProduct", params: { id: result.value.id } });
-//
 </script>
 
 <style scoped>
+.container-edic {
+  display: grid;
+  grid-template-columns: 30px 1fr;
+  justify-content: center;
+  align-items: center;
+}
 .container-edict {
   display: grid;
   justify-content: center;
   align-items: center;
   margin-top: 20px;
 }
-
+.arrow {
+  width: 100%;
+  height: 100%;
+}
+.arrow-leth {
+  width: 50px;
+  height: 50px;
+  padding: 12px;
+  margin-top: 10px;
+}
 .btn {
   width: 90px;
   height: 40px;

@@ -1,6 +1,5 @@
 <template>
   <div>
-    <MenuMovil v-if="showBurge" />
     <div class="main-container">
       <div class="cards-container">
         <productCard
@@ -21,7 +20,6 @@
 import productCard from "./productCard.vue";
 import Pagination from "../Navegacion/PaginationButton.vue";
 import { toRefs, defineProps, inject } from "vue";
-import MenuMovil from "../Navegacion/MenuMovil.vue";
 
 const props = defineProps({
   arrayItem: {
@@ -38,8 +36,6 @@ const { arrayItem } = toRefs(props);
 
 const { changePage } = inject("page");
 
-const { showBurge } = inject("showBurge");
-
 function eventButton(args) {
   console.log("eventListProducts", args);
   changePage(args);
@@ -47,9 +43,8 @@ function eventButton(args) {
 </script>
 
 <style scoped>
-body {
-  margin: 0;
-  font-family: "Quicksand", sans-serif;
+.main-container {
+  margin: 20px;
 }
 .cards-container {
   display: grid;
@@ -90,7 +85,6 @@ body {
   font-size: var(--sm);
   margin-top: 0;
   margin-bottom: 0;
-  color: var(--very-light-pink);
 }
 
 @media (max-width: 640px) {

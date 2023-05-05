@@ -45,6 +45,11 @@ function ConfirmOrder() {
 </script>
 
 <style>
+.tabla-2 {
+  display: grid;
+  justify-content: center;
+  align-items: center;
+}
 .segung-title {
   color: #ffacac;
 }

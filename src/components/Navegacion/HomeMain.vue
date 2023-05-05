@@ -13,7 +13,7 @@ import { useAsync } from "@/hooks/useAsync";
 import { useRoute } from "vue-router";
 import ListProduct from "../ProductFolder/ListProduct.vue";
 import ErrorComponent from "../errorHandling/ErrorComponent.vue";
-import { useCartStore} from "@/store/cartContainer";
+import { useCartStore } from "@/store/cartContainer";
 
 const route = useRoute();
 console.log("Este es el router", route.params);

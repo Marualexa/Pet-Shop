@@ -6,7 +6,8 @@ export const useCartStore = defineStore('cart', {
         cart: [],
         total: 0,
         length: 0,
-        quantity: 0
+        quantity: 0,
+        openCart: false
     }),
     getters: {
         getCartPets: (state) => {
@@ -32,6 +33,9 @@ export const useCartStore = defineStore('cart', {
                return constPrice.quantity * constPrice.price
             }
         },
+        getOpenCart: (state) => {
+            return state.openCart
+        }
     },
     actions: {
         async removeItemCart(item) {
@@ -129,6 +133,9 @@ export const useCartStore = defineStore('cart', {
             }
 
             this.cart = [...cartCopy.value];
+        },
+        neglectingCart() {
+            this.openCart = !this.openCart
         }
     },
 })
