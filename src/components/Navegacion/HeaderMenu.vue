@@ -1,24 +1,29 @@
 <template>
   <div class="container">
-      <img @click="resposibleMenu" src="@/assets/icon_menu.svg" alt="menu" class="menu" />
-      <MenuMovil v-if="showBurge" />
+    <img @click="resposibleMenu" src="@/assets/icon_menu.svg" alt="menu" class="menu" />
+    <MenuMovil v-if="showBurge" />
 
-    <div class="btn-group button-regist" role="group">
-      <span class="img-span"
-        ><img class="ingret" src="@/assets/acceso.png" alt=""
-      /></span>
-      <button
-        type="button"
-        class="btn btn-outline-primary dropdown-toggle"
-        data-bs-toggle="dropdown"
-        aria-expanded="false"
-      >
-        ENTER
-      </button>
-      <ul class="dropdown-menu">
-        <li><a class="dropdown-item" href="#">Login</a></li>
-        <li><a class="dropdown-item" href="#">Sign Up</a></li>
-      </ul>
+    <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+      <div class="btn-group" role="group">
+        <span class="img-span"
+          ><img class="ingret" src="@/assets/acceso.png" alt=""
+        /></span>
+        <button
+          id="btnGroupDrop1"
+          type="button"
+          class="btn btn-secondary dropdown-toggle"
+          data-toggle="dropdown"
+          aria-haspopup="true"
+          aria-expanded="false"
+        >
+          ENTER
+        </button>
+        <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+          <a class="dropdown-item" href="/login">Login</a>
+
+          <a class="dropdown-item" href="/registro">Sign Up</a>
+        </div>
+      </div>
     </div>
 
     <div class="navbar-left">
@@ -163,6 +168,9 @@ function takeHome() {
   justify-content: center;
   align-items: center;
 }
+.btn-group :hover {
+  border-radius: 23px; 
+}
 
 .button-item {
   display: flex;
@@ -224,7 +232,7 @@ function takeHome() {
   .navbar-left ul {
     display: none;
   }
-  .button-regist {
+  .btn-group {
     display: none;
   }
 }

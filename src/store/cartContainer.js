@@ -15,7 +15,6 @@ export const useCartStore = defineStore('cart', {
         },
         getTotalPrice: (state) => {
             return state.total = state.cart.reduce((sum, item) => {
-                console.log(sum, item)
                 const itemCart = item.price * item.quantity;
                 const sumItem = sum;
                 return itemCart + sumItem;
@@ -57,10 +56,7 @@ export const useCartStore = defineStore('cart', {
             try {
                 await makeRequest(`cart/${item.id}`);
             }
-            catch {
-
-            }
-            console.log('appStatus', appStatus.value)
+            catch {}
             // el item existe
             if (appStatus.value === 200) {
                 newItem.quantity = result.value.quantity + 1;
@@ -84,9 +80,6 @@ export const useCartStore = defineStore('cart', {
                 this.cart.push(newItem);
                 this.length += 1;
             }
-
-
-            console.log('newItem', newItem)
         },
         async getAddStore() {
             const { makeRequest, result } = useAsync();

@@ -60,12 +60,10 @@ function pageEvent(numberPage) {
 watch(
   () => resultData.value,
   (val) => {
-    console.log("resultData", resultData.value);
     const newItems = [...Array(resultData.value)].map((item, index) => ({
       numberPage: index + 1,
       id: `${index + 1}`,
     }));
-    console.log(newItems);
     itemspage.value = newItems;
   },
   { immediate: true }

@@ -48,12 +48,10 @@ import { onMounted, ref } from "vue";
 const title = ref("Ooops!");
 const Message = ref("Something went wrong the site did not charge properly 😣😣");
 const route = useRoute();
-console.log("Este es el router", route.params);
 
 const { result, errorData, makeRequest, isLoading } = useAsync();
 
 const { id } = route.params;
-console.log("id", id);
 
 onMounted(async () => {
   await makeRequest(`product/${id}`);
@@ -68,12 +66,9 @@ const showDeleteModal = ref(false);
 
 function delectButton() {
   showDeleteModal.value = true;
-  console.log("click delect", delectButton);
 }
-console.log("este es el result", result);
 
 function ModalEvent(arg) {
-  console.log("entrar para cerra", arg);
   showDeleteModal.value = false;
 }
 </script>

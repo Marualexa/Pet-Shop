@@ -17,7 +17,7 @@ provide('showBurge', {
 });
 
 function general() {
-  if(store.neglectingCart === true) {
+  if(store.getOpenCart === true) {
     !store.neglectingCart()
   }
 }

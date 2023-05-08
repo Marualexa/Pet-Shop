@@ -81,7 +81,6 @@ const { result, makeRequest, errorData } = useAsync();
 
 onMounted(() => {
   store.getAddStore();
-  console.log("onMounted entra", onMounted);
 });
 
 function backInict() {
@@ -102,7 +101,6 @@ const goToPage = async () => {
     meansOfPayment: "Tarjeta Crédito o Débito",
     paymentStatus: "No pagado",
   });
-  console.log("result", result);
   router.push({ name: "ordenConfirm", params: { id: result.value.id } });
 };
 </script>

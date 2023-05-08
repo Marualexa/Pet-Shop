@@ -131,14 +131,12 @@ watch(
     if (val) {
       imgEdit.value = val;
     }
-    console.log("Previsualuzacion imagen", dataForm);
   }
 );
 
 function editButton() {
   const resultFrom = Joi.validate(dataForm, datos, async (err, value) => {
     if (err) {
-      console.log("error", err);
       let starForm = err.message;
       let starIndex = starForm.indexOf("[") + 1;
       let endIndex = starForm.indexOf("]");
@@ -152,7 +150,7 @@ function editButton() {
       let messageIndix = string.slice(string2 + 1);
 
       errorObject.errorName = final;
-      errorObject.errorMessage = messageIndix;
+      errorObject.errorMessage = final + " " + messageIndix;
     } else {
       isLoading.value = true;
       await makeRequest(`product/${id}`, {}, "put", {

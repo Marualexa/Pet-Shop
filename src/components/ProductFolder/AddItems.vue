@@ -116,10 +116,9 @@ const hasError = computed(() => {
   };
 });
 
-async function createButton() {
+function createButton() {
   const resultFrom = Joi.validate(dataForm, datos, async (err, value) => {
     if (err) {
-      console.log("error", err);
       let starForm = err.message;
       let starIndex = starForm.indexOf("[") + 1;
       let endIndex = starForm.indexOf("]");
@@ -133,7 +132,7 @@ async function createButton() {
       let messageIndix = string.slice(string2 + 1);
 
       errorObject.errorName = final;
-      errorObject.errorMessage = messageIndix;
+      errorObject.errorMessage = final + " " + messageIndix;
     } else {
       loadingProduct.value = true;
 

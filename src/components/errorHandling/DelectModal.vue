@@ -25,11 +25,9 @@ import { useRouter } from "vue-router";
 const { errorData, makeRequest, isLoading } = useAsync();
 
 const route = useRoute();
-console.log("router params", route.params);
 const router = useRouter();
 
 const { id } = route.params;
-console.log("id", id);
 
 const emit = defineEmits(["closetModal"]);
 
@@ -38,10 +36,8 @@ function closetModal() {
 }
 
 async function deletePost() {
-  console.log('idDelete', id)
   await makeRequest(`product/${id}`, {}, "delete");
   router.push({ name: "home" });
-  console.log("button yes", deletePost);
 }
 
 </script>

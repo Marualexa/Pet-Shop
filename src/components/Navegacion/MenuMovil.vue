@@ -2,10 +2,14 @@
   <div class="mobile-menu">
     <ul>
       <li>
-        <a href="/login">Login</a>
+        <span class="img-span"
+          ><img class="ingret" src="@/assets/usuario.png" alt=""
+        /><a class="text-item" href="/login">Login</a></span>
       </li>
       <li>
-        <a href="/registro">Sign Up</a>
+        <span class="img-span"
+          ><img class="ingret" src="@/assets/registroUS.png" alt=""
+        /><a class="text-item" href="/registro">Sign Up</a></span>
       </li>
     </ul>
 
@@ -32,13 +36,15 @@
   background-color: #f7f7f7;
   left: 10px;
   border-radius: 50px;
-  margin-top: 15px;
+  margin-top: 350px;
 }
 .mobile-menu a {
   text-decoration: none;
   color: #000000;
   font-weight: bold;
+  padding-left: 8px;
 }
+
 .mobile-menu ul {
   padding: 0;
   margin: 24px 0 0;
@@ -57,5 +63,13 @@
 .sign-out {
   font-size: 14px;
   color: #ffacac !important;
+}
+.img-span {
+  margin-left: 10px;
+}
+.ingret {
+  width: 20px;
+  height: 20px;
+  object-fit: cover;
 }
 </style>

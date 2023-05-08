@@ -32,7 +32,6 @@ import { useRouter } from "vue-router";
 import { useCartStore } from "@/store/cartContainer";
 
 const store = useCartStore();
-console.log("store", store.addItemCart);
 
 const props = defineProps({
   id: {
@@ -53,7 +52,6 @@ const { id, imagen, price, title } = toRefs(props);
 const router = useRouter();
 
 function edictProduct(ev) {
-  console.log("entrar", ev);
   router.push({ name: "edictProduct", params: { id: id.value } });
 }
 </script>

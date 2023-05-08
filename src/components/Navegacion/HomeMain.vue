@@ -10,15 +10,11 @@
 import LoadModel from "./LoadModel.vue";
 import { ref, provide, watch, onMounted } from "vue";
 import { useAsync } from "@/hooks/useAsync";
-import { useRoute } from "vue-router";
 import ListProduct from "../ProductFolder/ListProduct.vue";
 import ErrorComponent from "../errorHandling/ErrorComponent.vue";
 import { useCartStore } from "@/store/cartContainer";
 
-const route = useRoute();
-console.log("Este es el router", route.params);
 const store = useCartStore();
-
 
 const { result, errorData, makeRequest, isLoading, cabecera } = useAsync();
 const page = ref("1");
@@ -33,11 +29,8 @@ const getRequest = async () => {
     _limit: limit.value,
   });
   const { "x-total-count": xTotal } = cabecera.value;
-  console.log("item", xTotal, cabecera.value);
   const numberStrin = Number(xTotal);
-  console.log('numberString', numberStrin);
   const stringLimit = Number(limit.value);
-  console.log('stringLimit', stringLimit);
 
   const divition = numberStrin / stringLimit;
   resultData.value = Math.ceil(divition);
@@ -49,7 +42,6 @@ onMounted(() => {
 });
 
 function changePage(args) {
-  console.log("eventHome", args);
   page.value = args;
 }
 
@@ -62,7 +54,6 @@ provide("page", {
 watch(
   () => page.value,
   (val) => {
-    console.log("HomeMain");
     isLoading.value = true;
     errorData.val = null;
     return getRequest();

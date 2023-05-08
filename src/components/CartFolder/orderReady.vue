@@ -58,7 +58,6 @@ const { result } = useAsync();
 const route = useRoute();
 
 const { id } = route.params;
-console.log("id", result.id);
 
 const store = useCartStore();
 const currentData = ref(new Date());

@@ -148,14 +148,13 @@ import ResumCar from "./ResumCar.vue";
 import { useAsync } from "@/hooks/useAsync";
 import { useCartStore } from "@/store/cartContainer";
 
-const { result, errorData, makeRequest, isLoading } = useAsync();
+const { result, makeRequest } = useAsync();
 const router = useRouter();
 const route = useRoute();
 
 const store = useCartStore();
 
 const { id } = route.params;
-console.log("conseguir", id);
 
 function arrowItem() {
   router.push({ name: "cartDetail" });
@@ -212,7 +211,7 @@ const goToPage = () => {
       let messageIndix = string.slice(string2 + 1);
 
       errorObject.errorName = final;
-      errorObject.errorMessage = messageIndix;
+      errorObject.errorMessage = final + " " + messageIndix;
     } else {
       await makeRequest(`order/${id}`, {}, "put", {
         products: store.getCartPets,

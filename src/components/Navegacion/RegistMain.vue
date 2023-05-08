@@ -104,7 +104,7 @@ const confirmData = () => {
       let messageIndix = string.slice(string2 + 1);
 
       errorObject.errorName = final;
-      errorObject.errorMessage = messageIndix;
+      errorObject.errorMessage = final + " " + messageIndix;
     } else {
       router.push({ name: "home" });
     }
