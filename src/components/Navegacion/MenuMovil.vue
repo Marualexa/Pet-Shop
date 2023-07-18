@@ -4,12 +4,12 @@
       <li>
         <span class="img-span"
           ><img class="ingret" src="@/assets/usuario.png" alt=""
-        /><a class="text-item" href="/login">Login</a></span>
+        /><a @click="login" class="text-item">Login</a></span>
       </li>
       <li>
         <span class="img-span"
           ><img class="ingret" src="@/assets/registroUS.png" alt=""
-        /><a class="text-item" href="/registro">Sign Up</a></span>
+        /><a @click="Regist" class="text-item">Sign Up</a></span>
       </li>
     </ul>
 
@@ -26,6 +26,20 @@
     </ul>
   </div>
 </template>
+
+<script setup>
+import { useRouter } from "vue-router";
+
+const router = useRouter();
+
+function login() {
+  router.push({ name: "login" })
+}
+
+function Regist() {
+  router.push({ name: "registro" })
+}
+</script>
 
 <style>
 .mobile-menu {

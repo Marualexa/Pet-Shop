@@ -1,10 +1,12 @@
 # Pet-Shop
 
-This template should help get you started developing with Vue 3 in Vite.
+En este proyecto te daré una tienda virtual la cual tiene todas las vistas para lograr una experiencia de compras virtual.
 
-## Recommended IDE Setup
+1- Baja el proyecto a tu local, corre con npm run dev.
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+2- El proyecto se trabajó con una base de dato local, que te proporcione en un documento que está anexo en mis repositorios llamado "base-dato-petShow".
+
+3- Dentro del README mencionado anteriormente te indicaré los pasos para instanciar la base de datos interna para que corra de manera correcta. .
 
 ## Customize configuration
 

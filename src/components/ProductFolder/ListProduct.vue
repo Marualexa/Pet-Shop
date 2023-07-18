@@ -37,7 +37,6 @@ const { arrayItem } = toRefs(props);
 const { changePage } = inject("page");
 
 function eventButton(args) {
-  console.log("eventListProducts", args);
   changePage(args);
 }
 </script>
